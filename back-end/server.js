@@ -1,12 +1,16 @@
 const express = require("express")
 const mongoose = require("mongoose")
 require("dotenv").config()
+const recipeRoutes = require("./routes/recipe")
 
 // Initialize Express App
 const app = express()
 
 // Middleware
 app.use(express.json())
+
+// Routes
+app.use("/api/recipe", recipeRoutes)
 
 // Connecting to db
 mongoose
