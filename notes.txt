@@ -1,0 +1,15 @@
+GET --> /recipe
+GET (one) --> /recipe
+POST --> /recipe
+DELETE --> /recipe/:id
+PATCH --> /recipe/:id
+
+
+
+
+Recipe Properties 
++ Photos 
++ Ingredients 
++ Instructions 
++ Like (Advanced)
++ Comment (Advanced)
