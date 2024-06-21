@@ -8,8 +8,19 @@ PATCH --> /recipe/:id
 
 
 Recipe Properties 
-+ Photos 
++ Image
 + Ingredients 
 + Instructions 
 + Like (Advanced)
 + Comment (Advanced)
+
+
+
+
+Sample JSON 
+
+{
+    "image": "C:\fakepath\IMG_3213.jpeg", 
+    "ingredients": "abc", 
+    "instruction": "abc", 
+}
