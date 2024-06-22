@@ -4,16 +4,16 @@ const router = express.Router()
 const path = require("path")
 const fs = require("fs")
 
-// Ensure the uploads directory exists
-const uploadDir = path.join(__dirname, "../images")
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true })
-}
-
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadDir)
+    // Ensure the directory exists
+    const imagesFolderPath = path.join(__dirname, "../images")
+    if (!fs.existsSync(imagesFolderPath)) {
+      fs.mkdirSync(imagesFolderPath, { recursive: true })
+    }
+    // Save image
+    cb(null, imagesFolderPath)
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname)
