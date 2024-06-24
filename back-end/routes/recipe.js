@@ -1,27 +1,10 @@
 const express = require("express")
 const multer = require("multer")
 const router = express.Router()
-const path = require("path")
-const fs = require("fs")
-
-// Multer configuration for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    // Ensure the directory exists
-    const imagesFolderPath = path.join(__dirname, "../images")
-    if (!fs.existsSync(imagesFolderPath)) {
-      fs.mkdirSync(imagesFolderPath, { recursive: true })
-    }
-    // Save image
-    cb(null, imagesFolderPath)
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname)
-  },
-})
+const multerConfig = require("../utils/multerConfig")
 
 // Middleware
-const upload = multer({ storage: storage })
+const upload = multer({ storage: multerConfig("../../front-end/src/images") })
 
 // Routes
 router.get("/", (req, res) => {
@@ -32,7 +15,7 @@ router.get("/:id", (req, res) => {
 })
 router.post("/", upload.single("image"), (req, res) => {
   console.log(req.file.filename)
-  console.log(req.body.title)
+  console.log(req.body)
   res.json({ message: "POST recipes" })
 })
 router.delete("/:id", (req, res) => {
