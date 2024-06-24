@@ -9,6 +9,15 @@ async function getRecipes(req, res) {
   }
 }
 
+async function getRecipe(req, res) {
+  try {
+    const recipe = await Recipe.findById(req.params.id)
+    res.status(200).json(recipe)
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
 async function createRecipe(req, res) {
   const { title, ingredients, instruction } = req.body
   const image = req.file.filename
@@ -26,6 +35,7 @@ async function createRecipe(req, res) {
 }
 
 module.exports = {
-  createRecipe,
   getRecipes,
+  getRecipe,
+  createRecipe,
 }
