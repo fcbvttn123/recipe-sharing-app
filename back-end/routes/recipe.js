@@ -6,6 +6,7 @@ const {
   createRecipe,
   getRecipes,
   getRecipe,
+  deleteRecipe,
 } = require("../controllers/recipeControllers")
 
 // Middleware
@@ -15,9 +16,7 @@ const upload = multer({ storage: multerConfig("../../front-end/src/images") })
 router.get("/", getRecipes)
 router.get("/:id", getRecipe)
 router.post("/", upload.single("image"), createRecipe)
-router.delete("/:id", (req, res) => {
-  res.json({ message: `DELETE recipe: ${req.params.id}` })
-})
+router.delete("/:id", deleteRecipe)
 router.patch("/:id", (req, res) => {
   res.json({ message: `UPDATE recipe: ${req.params.id}` })
 })
