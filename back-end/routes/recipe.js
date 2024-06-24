@@ -7,6 +7,7 @@ const {
   getRecipes,
   getRecipe,
   deleteRecipe,
+  updateRecipe,
 } = require("../controllers/recipeControllers")
 
 // Middleware
@@ -17,8 +18,6 @@ router.get("/", getRecipes)
 router.get("/:id", getRecipe)
 router.post("/", upload.single("image"), createRecipe)
 router.delete("/:id", deleteRecipe)
-router.patch("/:id", (req, res) => {
-  res.json({ message: `UPDATE recipe: ${req.params.id}` })
-})
+router.patch("/:id", updateRecipe)
 
 module.exports = router

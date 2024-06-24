@@ -43,9 +43,25 @@ async function deleteRecipe(req, res) {
   }
 }
 
+async function updateRecipe(req, res) {
+  console.log(req.body)
+  try {
+    const recipe = await Recipe.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        ...req.body,
+      }
+    )
+    res.status(200).json(recipe)
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
 module.exports = {
   getRecipes,
   getRecipe,
   createRecipe,
   deleteRecipe,
+  updateRecipe,
 }

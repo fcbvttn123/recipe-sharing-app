@@ -24,3 +24,10 @@ mongoose
   .catch((error) => {
     console.error(error)
   })
+
+/*
+
+  Problems: 
+    + PATCH Request: work for JSON Data but not for Form Data
+
+*/
