@@ -2,15 +2,13 @@ const express = require("express")
 const router = express.Router()
 const multer = require("multer")
 const multerConfig = require("../utils/multerConfig")
-const { createRecipe } = require("../controllers/recipeControllers")
+const { createRecipe, getRecipes } = require("../controllers/recipeControllers")
 
 // Middleware
 const upload = multer({ storage: multerConfig("../../front-end/src/images") })
 
 // Routes
-router.get("/", (req, res) => {
-  res.json({ message: "GET recipes" })
-})
+router.get("/", getRecipes)
 router.get("/:id", (req, res) => {
   res.json({ message: `GET recipe: ${req.params.id}` })
 })
