@@ -9,16 +9,16 @@ const {
   deleteRecipe,
   updateRecipe,
 } = require("../controllers/recipeControllers")
-const { signupUser } = require("../controllers/userControllers")
+const authRequired = require("../middleware/authRequired")
 
 // Middleware
 const upload = multer({ storage: multerConfig("../../front-end/src/images") })
 
 // Recipe Routes
-router.get("/", getRecipes)
-router.get("/:id", getRecipe)
-router.post("/", upload.single("image"), createRecipe)
-router.delete("/:id", deleteRecipe)
-router.patch("/:id", updateRecipe)
+router.get("/", authRequired, getRecipes)
+router.get("/:id", authRequired, getRecipe)
+router.post("/", authRequired, upload.single("image"), createRecipe)
+router.delete("/:id", authRequired, deleteRecipe)
+router.patch("/:id", authRequired, updateRecipe)
 
 module.exports = router

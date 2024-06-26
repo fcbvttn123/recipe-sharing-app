@@ -31,6 +31,7 @@ mongoose
 
   Problems: 
     + PATCH Request: work for JSON Data but not for Form Data
+    + Learn again JWT and read again the authRequired.js file
     + Learn using path 
     + Differences between JSON data and Form Data
     + Differences between "return error" and "throw error" in /routes/userModel.js --> userSchema.statics.signup
