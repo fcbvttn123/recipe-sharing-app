@@ -29,5 +29,7 @@ mongoose
 
   Problems: 
     + PATCH Request: work for JSON Data but not for Form Data
+    + Learn using path 
+    + Differences between JSON data and Form Data
 
 */
