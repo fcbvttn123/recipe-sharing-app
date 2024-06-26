@@ -9,11 +9,12 @@ const {
   deleteRecipe,
   updateRecipe,
 } = require("../controllers/recipeControllers")
+const { signupUser } = require("../controllers/userControllers")
 
 // Middleware
 const upload = multer({ storage: multerConfig("../../front-end/src/images") })
 
-// Routes
+// Recipe Routes
 router.get("/", getRecipes)
 router.get("/:id", getRecipe)
 router.post("/", upload.single("image"), createRecipe)
