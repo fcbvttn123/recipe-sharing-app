@@ -3,9 +3,10 @@ const router = express.Router()
 const multer = require("multer")
 const multerConfig = require("../utils/multerConfig")
 const {
-  createRecipe,
   getRecipes,
+  getYourRecipes,
   getRecipe,
+  createRecipe,
   deleteRecipe,
   updateRecipe,
 } = require("../controllers/recipeControllers")
@@ -15,7 +16,8 @@ const authRequired = require("../middleware/authRequired")
 const upload = multer({ storage: multerConfig("../../front-end/src/images") })
 
 // Recipe Routes
-router.get("/", authRequired, getRecipes)
+router.get("/", getRecipes)
+router.get("/recipesOf/:email", getYourRecipes)
 router.get("/:id", authRequired, getRecipe)
 router.post("/", authRequired, upload.single("image"), createRecipe)
 router.delete("/:id", authRequired, deleteRecipe)

@@ -1,9 +1,28 @@
 const Recipe = require("../models/recipeModels")
+const validator = require("validator")
 
 async function getRecipes(req, res) {
   try {
     const recipes = await Recipe.find({}).sort({ createdAt: -1 })
     res.status(200).json(recipes)
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+}
+
+async function getYourRecipes(req, res) {
+  const { email } = req.params
+  try {
+    if (!validator.isEmail(email)) {
+      throw Error("Email not valid")
+    }
+    const yourRecipes = await Recipe.find({ email })
+    if (yourRecipes.length == 0) {
+      return res
+        .status(404)
+        .json({ message: "No recipes found for this email" })
+    }
+    res.status(200).json(yourRecipes)
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -45,7 +64,6 @@ async function deleteRecipe(req, res) {
 }
 
 async function updateRecipe(req, res) {
-  console.log(req.body)
   try {
     const recipe = await Recipe.findOneAndUpdate(
       { _id: req.params.id },
@@ -61,6 +79,7 @@ async function updateRecipe(req, res) {
 
 module.exports = {
   getRecipes,
+  getYourRecipes,
   getRecipe,
   createRecipe,
   deleteRecipe,
