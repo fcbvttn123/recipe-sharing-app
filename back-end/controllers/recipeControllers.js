@@ -19,7 +19,7 @@ async function getRecipe(req, res) {
 }
 
 async function createRecipe(req, res) {
-  const { title, ingredients, instruction } = req.body
+  const { title, ingredients, instruction, email } = req.body
   const image = req.file.filename
   try {
     const recipe = await Recipe.create({
@@ -27,6 +27,7 @@ async function createRecipe(req, res) {
       image,
       ingredients,
       instruction,
+      email,
     })
     res.status(200).json(recipe)
   } catch (error) {
