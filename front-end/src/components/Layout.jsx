@@ -85,7 +85,7 @@ export function Layout(props) {
       <Divider />
       <List>
         {links.map((e, index) => (
-          <Link to={e.path}>
+          <Link to={e.path} key={index}>
             <ListItem button key={index}>
               <ListItemIcon>{e.icon}</ListItemIcon>
               <ListItemText primary={e.text} />

@@ -1,7 +1,5 @@
+import { RecipeCard } from "../components/RecipeCard"
+
 export function Home() {
-  return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
-  )
+  return <div></div>
 }
