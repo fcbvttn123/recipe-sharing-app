@@ -13,7 +13,9 @@ const {
 const authRequired = require("../middleware/authRequired")
 
 // Middleware
-const upload = multer({ storage: multerConfig("../../front-end/src/images") })
+const upload = multer({
+  storage: multerConfig("../../front-end/public/images"),
+})
 
 // Recipe Routes
 router.get("/", getRecipes)

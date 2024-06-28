@@ -69,7 +69,7 @@ export function RecipeCard({
         title={title}
         subheader={datePosted}
       />
-      <CardMedia className={classes.media} image={`../images/${imgName}`} />
+      <CardMedia className={classes.media} image={`./images/${imgName}`} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {ingredients}
