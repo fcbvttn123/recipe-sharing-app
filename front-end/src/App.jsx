@@ -1,7 +1,19 @@
-import { useState } from "react"
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom"
+import { Layout } from "./components/Layout"
+import { Home } from "./pages/Home"
+import { PostRecipe } from "./pages/PostRecipe"
 
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>
+  return (
+    <Router>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/postRecipe" element={<PostRecipe />} />
+        </Route>
+      </Routes>
+    </Router>
+  )
 }
 
 export default App
