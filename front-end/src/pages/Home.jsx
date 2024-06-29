@@ -22,7 +22,7 @@ export function Home() {
             datePosted={e.createdAt}
             imgName={e.image}
             ingredients={e.ingredients}
-            instructions={e.instructions}
+            instructions={e.instruction}
           />
         ))}
     </div>

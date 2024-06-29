@@ -6,15 +6,15 @@ import CardMedia from "@material-ui/core/CardMedia"
 import CardContent from "@material-ui/core/CardContent"
 import CardActions from "@material-ui/core/CardActions"
 import Collapse from "@material-ui/core/Collapse"
-import Avatar from "@material-ui/core/Avatar"
 import IconButton from "@material-ui/core/IconButton"
 import Typography from "@material-ui/core/Typography"
-import { red } from "@material-ui/core/colors"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { useState } from "react"
+import { Avatar } from "./Avatar"
+import { formatDistanceToNow } from "date-fns"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%",
   },
   expand: {
     transform: "rotate(0deg)",
@@ -34,9 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
   expandOpen: {
     transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: red[500],
   },
 }))
 
@@ -56,18 +53,14 @@ export function RecipeCard({
   return (
     <Card className={classes.root}>
       <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            {email[0]}
-          </Avatar>
-        }
+        avatar={<Avatar>{email[0].toUpperCase()}</Avatar>}
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
         title={title}
-        subheader={datePosted}
+        subheader={formatDistanceToNow(datePosted, { addSuffix: true })}
       />
       <CardMedia className={classes.media} image={`./images/${imgName}`} />
       <CardContent>
