@@ -57,11 +57,14 @@ const useStyles = makeStyles((theme) => ({
   outlet: {
     [theme.breakpoints.down("sm")]: {
       marginLeft: 20,
+      marginRight: 20,
       marginTop: 80,
+      marginBottom: 20,
     },
     [theme.breakpoints.up("sm")]: {
       marginLeft: 260,
       marginTop: 85,
+      marginBottom: 25,
     },
   },
 }))

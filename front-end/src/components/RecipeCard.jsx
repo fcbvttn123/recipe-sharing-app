@@ -19,7 +19,6 @@ import { formatDistanceToNow } from "date-fns"
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
-    marginBottom: 40,
   },
   media: {
     height: 0,

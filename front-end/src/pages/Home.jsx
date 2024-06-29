@@ -12,7 +12,7 @@ export function Home() {
     getRecipes()
   }, [])
   return (
-    <div>
+    <div className="flex flex-wrap justify-center items-center gap-8">
       {recipes &&
         recipes.map((e, i) => (
           <RecipeCard
