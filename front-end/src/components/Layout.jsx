@@ -6,6 +6,7 @@ import { useState } from "react"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import {
   AppBar,
+  Button,
   Divider,
   Drawer,
   Hidden,
@@ -46,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
   },
@@ -84,7 +84,21 @@ export function Layout(props) {
     window !== undefined ? () => window().document.body : undefined
   const drawer = (
     <div>
-      <div className={classes.toolbar} />
+      <List>
+        <div
+          style={{ minHeight: "48px" }}
+          className="flex items-center justify-center gap-x-8"
+        >
+          <Link to="/login">
+            <Button variant="contained" color="primary">
+              Login
+            </Button>
+          </Link>
+          <Link to="/signup">
+            <Button variant="contained">Sign Up</Button>
+          </Link>
+        </div>
+      </List>
       <Divider />
       <List>
         {links.map((e, index) => (
