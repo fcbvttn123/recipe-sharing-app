@@ -32,7 +32,7 @@ export function Signup() {
           // save the user to local storage
           localStorage.setItem(
             "RECIPE-SHARING-APP-USER-TOKEN",
-            JSON.stringify(json.token)
+            JSON.stringify(json)
           )
           // update the auth context
           dispatch({ type: AUTH_ACTIONS.LOGIN, payload: json })

@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react"
+import { createContext, useEffect, useReducer } from "react"
 import { AUTH_ACTIONS } from "../main"
 
 export const AuthContext = createContext()
@@ -22,6 +22,13 @@ export function AuthContextProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
   })
+  useEffect(() => {
+    let userFromLocalStorage = JSON.parse(
+      localStorage.getItem("RECIPE-SHARING-APP-USER-TOKEN")
+    )
+    userFromLocalStorage &&
+      dispatch({ type: AUTH_ACTIONS.LOGIN, payload: userFromLocalStorage })
+  }, [])
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}
