@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { RecipeCard } from "../components/RecipeCard"
+import { useRecipeContext } from "../hooks/useRecipeContext"
+import { RECIPE_ACTIONS } from "../main"
 
 export function Home() {
-  const [recipes, setRecipes] = useState(null)
+  const { recipes, dispatch } = useRecipeContext()
   useEffect(() => {
     async function getRecipes() {
       let res = await fetch("/api/recipe")
       let json = await res.json()
-      setRecipes(json)
+      dispatch({ type: RECIPE_ACTIONS.GET_RECIPES, payload: json })
     }
     getRecipes()
   }, [])
