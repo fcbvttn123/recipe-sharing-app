@@ -2,8 +2,11 @@ import { Button, TextField, Typography } from "@material-ui/core"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { handleFormChange } from "../hooks/handleFormChange"
+import { useAuthContext } from "../hooks/useAuthContext"
+import { AUTH_ACTIONS } from "../main"
 
 export function Signup() {
+  const { user, dispatch } = useAuthContext()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -32,6 +35,7 @@ export function Signup() {
             JSON.stringify(json.token)
           )
           // update the auth context
+          dispatch({ type: AUTH_ACTIONS.LOGIN, payload: json })
           // update loading state
           setIsLoading(false)
         }
