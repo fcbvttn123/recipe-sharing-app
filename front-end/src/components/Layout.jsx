@@ -23,6 +23,10 @@ import {
 import MenuIcon from "@material-ui/icons/Menu"
 import HomeIcon from "@material-ui/icons/Home"
 import CreateIcon from "@material-ui/icons/Create"
+import { useAuthContext } from "../hooks/useAuthContext"
+import { Avatar } from "./Avatar"
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import { AUTH_ACTIONS } from "../main"
 
 const drawerWidth = 240
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +80,7 @@ export function Layout(props) {
     { icon: <CreateIcon />, text: "Post Your Recipe", path: "/postRecipe" },
   ])
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { user, dispatch } = useAuthContext()
   // MUI
   const { window } = props
   const classes = useStyles()
@@ -85,19 +90,36 @@ export function Layout(props) {
   const drawer = (
     <div>
       <List>
-        <div
-          style={{ minHeight: "48px" }}
-          className="flex items-center justify-center gap-x-8"
-        >
-          <Link to="/login">
-            <Button variant="contained" color="primary">
-              Login
-            </Button>
-          </Link>
-          <Link to="/signup">
-            <Button variant="contained">Sign Up</Button>
-          </Link>
-        </div>
+        {user ? (
+          // If user is signed in, the drawer shows logout button
+          <ListItem
+            button
+            onClick={(e) => {
+              localStorage.setItem("RECIPE-SHARING-APP-USER-TOKEN", null)
+              dispatch({ type: AUTH_ACTIONS.LOGOUT })
+            }}
+          >
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        ) : (
+          // Else, the drawer shows login/sign-up buttons
+          <div
+            style={{ minHeight: "48px" }}
+            className="flex items-center justify-center gap-x-8"
+          >
+            <Link to="/login">
+              <Button variant="contained" color="primary">
+                Login
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button variant="contained">Sign Up</Button>
+            </Link>
+          </div>
+        )}
       </List>
       <Divider />
       <List>
@@ -111,6 +133,16 @@ export function Layout(props) {
         ))}
       </List>
       <Divider />
+      {user && (
+        <>
+          <List>
+            <ListItem button>
+              <ListItemText primary={user.email} />
+            </ListItem>
+          </List>
+          <Divider />
+        </>
+      )}
     </div>
   )
   // Functions
