@@ -24,3 +24,11 @@ function App() {
 }
 
 export default App
+
+/*
+
+  Problems 
+
+    + Add popup when users access protected routes without being logged in
+
+*/
