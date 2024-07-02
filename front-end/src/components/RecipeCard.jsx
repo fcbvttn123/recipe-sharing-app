@@ -15,6 +15,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { useState } from "react"
 import { Avatar } from "./Avatar"
 import { formatDistanceToNow } from "date-fns"
+import DeleteIcon from "@material-ui/icons/Delete"
+import { useAuthContext } from "../hooks/useAuthContext"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +48,7 @@ export function RecipeCard({
 }) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
+  const { user } = useAuthContext()
   const handleExpandClick = () => {
     setExpanded(!expanded)
   }
@@ -71,9 +74,11 @@ export function RecipeCard({
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        {user?.email == email && (
+          <IconButton aria-label="share">
+            <DeleteIcon />
+          </IconButton>
+        )}
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,

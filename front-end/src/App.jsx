@@ -35,4 +35,6 @@ export default App
 
     + Handle form error for recipe post form
 
+    + Picture is not shown in card details 
+
 */
