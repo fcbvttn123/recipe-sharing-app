@@ -18,7 +18,12 @@ export function PostRecipe() {
   const [isLoading, setIsLoading] = useState(false)
   function handleFormSubmit(e) {
     e.preventDefault()
-    if (!recipeImage || !title || !ingredients || !instruction) {
+    if (
+      !recipeImage ||
+      !formData.title ||
+      !formData.ingredients ||
+      !formData.instruction
+    ) {
       setError("All fields must be filled")
       throw new Error("All fields must be filled")
     }
@@ -99,6 +104,7 @@ export function PostRecipe() {
               type="file"
               name="image"
               id="image"
+              accept="image/*"
               onChange={(e) => setRecipeImage(e.target.files[0])}
             />
           </div>

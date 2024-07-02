@@ -8,6 +8,7 @@ import { AuthContextProvider } from "./context/AuthContext.jsx"
 export const RECIPE_ACTIONS = {
   GET_RECIPES: "GET_RECIPES",
   POST_RECIPE: "POST_RECIPE",
+  DELETE_RECIPE: "DELETE_RECIPE",
 }
 
 export const AUTH_ACTIONS = {

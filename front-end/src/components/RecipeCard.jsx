@@ -17,6 +17,8 @@ import { Avatar } from "./Avatar"
 import { formatDistanceToNow } from "date-fns"
 import DeleteIcon from "@material-ui/icons/Delete"
 import { useAuthContext } from "../hooks/useAuthContext"
+import { useRecipeContext } from "../hooks/useRecipeContext"
+import { RECIPE_ACTIONS } from "../main"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export function RecipeCard({
+  id,
   email,
   title,
   datePosted,
@@ -49,11 +52,33 @@ export function RecipeCard({
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
   const { user } = useAuthContext()
+  const { recipes, dispatch } = useRecipeContext()
   const handleExpandClick = () => {
     setExpanded(!expanded)
   }
+  function handleDeleteEvent(e) {
+    async function startDeleteProcess(deletedId) {
+      try {
+        let res = await fetch(`/api/recipe/${deletedId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        let json = await res.json()
+        if (res.ok) {
+          dispatch({ type: RECIPE_ACTIONS.DELETE_RECIPE, payload: deletedId })
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    startDeleteProcess(id)
+  }
   return (
     <Card className={classes.root}>
+      {/* Card Header */}
       <CardHeader
         avatar={<Avatar>{email[0].toUpperCase()}</Avatar>}
         action={
@@ -64,18 +89,21 @@ export function RecipeCard({
         title={title}
         subheader={formatDistanceToNow(datePosted, { addSuffix: true })}
       />
+      {/* Card Image */}
       <CardMedia className={classes.media} image={`./images/${imgName}`} />
+      {/* Card Content */}
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {ingredients}
         </Typography>
       </CardContent>
+      {/* Card Actions */}
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
         {user?.email == email && (
-          <IconButton aria-label="share">
+          <IconButton aria-label="share" onClick={handleDeleteEvent}>
             <DeleteIcon />
           </IconButton>
         )}
@@ -90,6 +118,7 @@ export function RecipeCard({
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
+      {/* Card Expanded */}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>{instructions}</Typography>

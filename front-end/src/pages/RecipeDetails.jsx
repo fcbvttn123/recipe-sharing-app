@@ -8,9 +8,10 @@ export function RecipeDetails() {
   let recipe = recipes ? recipes.find((e) => e._id == id) : null
   return (
     <div>
-      {recipe && (
+      {recipe ? (
         <RecipeCard
           key={recipe._id}
+          id={recipe._id}
           email={recipe.email}
           title={recipe.title}
           datePosted={recipe.createdAt}
@@ -18,6 +19,8 @@ export function RecipeDetails() {
           ingredients={recipe.ingredients}
           instructions={recipe.instruction}
         />
+      ) : (
+        <p>This recipe is not available anymore !</p>
       )}
     </div>
   )

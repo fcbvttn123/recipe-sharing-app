@@ -13,6 +13,10 @@ export function recipeReducer(state, action) {
       return {
         recipes: [action.payload, ...(state.recipes || [])],
       }
+    case RECIPE_ACTIONS.DELETE_RECIPE:
+      return {
+        recipes: state.recipes.filter((e) => e._id !== action.payload),
+      }
     default:
       return state
   }
