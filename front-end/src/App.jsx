@@ -5,6 +5,7 @@ import { PostRecipe } from "./pages/PostRecipe"
 import { Login } from "./pages/Login"
 import { Signup } from "./pages/Signup"
 import AuthRequired from "./components/AuthRequired"
+import { RecipeDetails } from "./pages/RecipeDetails"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
           <Route element={<AuthRequired />}>
             <Route path="/postRecipe" element={<PostRecipe />} />
           </Route>
