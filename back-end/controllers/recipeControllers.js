@@ -49,8 +49,8 @@ async function createRecipe(req, res) {
       email,
     })
     res.status(200).json(recipe)
-  } catch (error) {
-    res.status(400).json({ message: error.message })
+  } catch (err) {
+    res.status(400).json({ error: err.message })
   }
 }
 

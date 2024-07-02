@@ -14,8 +14,14 @@ export function PostRecipe() {
     ingredients: "",
     instruction: "",
   })
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   function handleFormSubmit(e) {
     e.preventDefault()
+    if (!recipeImage || !title || !ingredients || !instruction) {
+      setError("All fields must be filled")
+      throw new Error("All fields must be filled")
+    }
     const formDataObj = new FormData()
     formDataObj.append("title", formData.title)
     formDataObj.append("ingredients", formData.ingredients)
@@ -23,15 +29,27 @@ export function PostRecipe() {
     formDataObj.append("email", user.email)
     formDataObj.append("image", recipeImage)
     async function startPosting(formDataObjParameter) {
-      let res = await fetch("/api/recipe", {
-        method: "POST",
-        body: formDataObjParameter,
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
-      let json = await res.json()
-      dispatch({ type: RECIPE_ACTIONS.POST_RECIPE, payload: json })
+      setIsLoading(true)
+      try {
+        let res = await fetch("/api/recipe", {
+          method: "POST",
+          body: formDataObjParameter,
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        let json = await res.json()
+        if (!res.ok) {
+          setError(json.error)
+          setIsLoading(false)
+        }
+        if (res.ok) {
+          dispatch({ type: RECIPE_ACTIONS.POST_RECIPE, payload: json })
+          setIsLoading(false)
+        }
+      } catch (error) {
+        console.error(error)
+      }
     }
     startPosting(formDataObj)
   }
@@ -92,6 +110,7 @@ export function PostRecipe() {
           >
             Submit
           </Button>
+          {error && <p className="text-red-600">{error}</p>}
         </form>
       ) : (
         // If user is not logged in, show this text

@@ -31,4 +31,6 @@ export default App
 
     + Add popup when users access protected routes without being logged in
 
+    + Handle form error for recipe post form
+
 */

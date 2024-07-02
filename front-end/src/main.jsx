@@ -13,6 +13,7 @@ export const RECIPE_ACTIONS = {
 export const AUTH_ACTIONS = {
   LOGIN: "LOGIN",
   LOGOUT: "LOGOUT",
+  SET_LOADING: "SET_LOADING",
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
