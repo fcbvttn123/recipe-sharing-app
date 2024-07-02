@@ -4,6 +4,7 @@ import { Home } from "./pages/Home"
 import { PostRecipe } from "./pages/PostRecipe"
 import { Login } from "./pages/Login"
 import { Signup } from "./pages/Signup"
+import AuthRequired from "./components/AuthRequired"
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/postRecipe" element={<PostRecipe />} />
+          <Route element={<AuthRequired />}>
+            <Route path="/postRecipe" element={<PostRecipe />} />
+          </Route>
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
