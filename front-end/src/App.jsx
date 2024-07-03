@@ -6,6 +6,7 @@ import { Login } from "./pages/Login"
 import { Signup } from "./pages/Signup"
 import AuthRequired from "./components/AuthRequired"
 import { RecipeDetails } from "./pages/RecipeDetails"
+import { EditRecipe } from "./pages/EditRecipe"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/recipeDetails/:id" element={<RecipeDetails />} />
+          <Route path="/editRecipe/:id" element={<EditRecipe />} />
           <Route element={<AuthRequired />}>
             <Route path="/postRecipe" element={<PostRecipe />} />
           </Route>
@@ -26,15 +28,3 @@ function App() {
 }
 
 export default App
-
-/*
-
-  Problems 
-
-    + Add popup when users access protected routes without being logged in
-
-    + Handle form error for recipe post form
-
-    + Picture is not shown in card details 
-
-*/

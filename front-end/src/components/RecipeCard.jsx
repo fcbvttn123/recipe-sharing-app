@@ -9,7 +9,6 @@ import Collapse from "@material-ui/core/Collapse"
 import IconButton from "@material-ui/core/IconButton"
 import Typography from "@material-ui/core/Typography"
 import FavoriteIcon from "@material-ui/icons/Favorite"
-import ShareIcon from "@material-ui/icons/Share"
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import { useState } from "react"
@@ -19,6 +18,9 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useRecipeContext } from "../hooks/useRecipeContext"
 import { RECIPE_ACTIONS } from "../main"
+import Menu from "@material-ui/core/Menu"
+import MenuItem from "@material-ui/core/MenuItem"
+import { Link } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,8 +53,9 @@ export function RecipeCard({
 }) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
   const { user } = useAuthContext()
-  const { recipes, dispatch } = useRecipeContext()
+  const { dispatch } = useRecipeContext()
   function handleDeleteEvent(e, idParam) {
     e.stopPropagation()
     e.preventDefault()
@@ -81,9 +84,29 @@ export function RecipeCard({
       <CardHeader
         avatar={<Avatar>{email[0].toUpperCase()}</Avatar>}
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          <>
+            <IconButton
+              aria-label="settings"
+              onClick={(e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                setAnchorEl(e.currentTarget)
+              }}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={() => setAnchorEl(null)}
+            >
+              <Link to={`/editRecipe/${id}`}>
+                <MenuItem onClick={() => setAnchorEl(null)}>Edit</MenuItem>
+              </Link>
+            </Menu>
+          </>
         }
         title={title}
         subheader={formatDistanceToNow(datePosted, { addSuffix: true })}
