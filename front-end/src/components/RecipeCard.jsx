@@ -53,10 +53,9 @@ export function RecipeCard({
   const [expanded, setExpanded] = useState(false)
   const { user } = useAuthContext()
   const { recipes, dispatch } = useRecipeContext()
-  const handleExpandClick = () => {
-    setExpanded(!expanded)
-  }
-  function handleDeleteEvent(e) {
+  function handleDeleteEvent(e, idParam) {
+    e.stopPropagation()
+    e.preventDefault()
     async function startDeleteProcess(deletedId) {
       try {
         let res = await fetch(`/api/recipe/${deletedId}`, {
@@ -74,7 +73,7 @@ export function RecipeCard({
         console.error(err)
       }
     }
-    startDeleteProcess(id)
+    startDeleteProcess(idParam)
   }
   return (
     <Card className={classes.root}>
@@ -99,11 +98,21 @@ export function RecipeCard({
       </CardContent>
       {/* Card Actions */}
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton
+          aria-label="add to favorites"
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            console.log("Liked")
+          }}
+        >
           <FavoriteIcon />
         </IconButton>
         {user?.email == email && (
-          <IconButton aria-label="share" onClick={handleDeleteEvent}>
+          <IconButton
+            aria-label="share"
+            onClick={(e) => handleDeleteEvent(e, id)}
+          >
             <DeleteIcon />
           </IconButton>
         )}
@@ -111,7 +120,11 @@ export function RecipeCard({
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            setExpanded(!expanded)
+          }}
           aria-expanded={expanded}
           aria-label="show more"
         >

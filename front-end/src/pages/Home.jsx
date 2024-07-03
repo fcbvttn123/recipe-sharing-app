@@ -11,6 +11,7 @@ export function Home() {
           <Link to={`/recipeDetails/${e._id}`}>
             <RecipeCard
               key={e._id}
+              id={e._id}
               email={e.email}
               title={e.title}
               datePosted={e.createdAt}
