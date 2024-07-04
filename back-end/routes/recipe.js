@@ -23,6 +23,6 @@ router.get("/recipesOf/:email", getYourRecipes)
 router.get("/:id", authRequired, getRecipe)
 router.post("/", authRequired, upload.single("image"), createRecipe)
 router.delete("/:id", authRequired, deleteRecipe)
-router.patch("/:id", authRequired, updateRecipe)
+router.patch("/:id", authRequired, upload.single("image"), updateRecipe)
 
 module.exports = router

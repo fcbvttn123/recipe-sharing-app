@@ -17,6 +17,21 @@ export function recipeReducer(state, action) {
       return {
         recipes: state.recipes.filter((e) => e._id !== action.payload),
       }
+    case RECIPE_ACTIONS.PATCH_RECIPE:
+      return {
+        recipes: state.recipes.map((e) => {
+          if (e._id == action.payload._id) {
+            return {
+              ...action.payload,
+            }
+          }
+        }),
+      }
+    case RECIPE_ACTIONS.SET_LOADING:
+      return {
+        recipes: state.recipes,
+        loading: false,
+      }
     default:
       return state
   }
@@ -25,12 +40,16 @@ export function recipeReducer(state, action) {
 export function RecipeContextProvider({ children }) {
   const [state, dispatch] = useReducer(recipeReducer, {
     recipes: null,
+    loading: true,
   })
   useEffect(() => {
     async function getRecipes() {
       let res = await fetch("/api/recipe")
       let json = await res.json()
-      dispatch({ type: RECIPE_ACTIONS.GET_RECIPES, payload: json })
+      if (res.ok) {
+        dispatch({ type: RECIPE_ACTIONS.GET_RECIPES, payload: json })
+        dispatch({ type: RECIPE_ACTIONS.SET_LOADING, payload: false })
+      }
     }
     getRecipes()
   }, [])

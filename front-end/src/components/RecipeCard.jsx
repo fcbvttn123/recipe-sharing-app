@@ -102,7 +102,7 @@ export function RecipeCard({
               open={Boolean(anchorEl)}
               onClose={() => setAnchorEl(null)}
             >
-              {user.email == email && (
+              {user?.email == email && (
                 <Link to={`/editRecipe/${id}`}>
                   <MenuItem onClick={() => setAnchorEl(null)}>Edit</MenuItem>
                 </Link>

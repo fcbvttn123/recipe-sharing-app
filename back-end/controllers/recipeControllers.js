@@ -65,10 +65,15 @@ async function deleteRecipe(req, res) {
 
 async function updateRecipe(req, res) {
   try {
+    const { title, ingredients, instruction } = req?.body
+    const image = req?.file?.filename
     const recipe = await Recipe.findOneAndUpdate(
       { _id: req.params.id },
       {
-        ...req.body,
+        title,
+        ingredients,
+        instruction,
+        image,
       }
     )
     res.status(200).json(recipe)

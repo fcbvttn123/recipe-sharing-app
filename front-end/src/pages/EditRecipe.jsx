@@ -1,15 +1,19 @@
 import { Button, TextField } from "@material-ui/core"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useRecipeContext } from "../hooks/useRecipeContext"
 import { handleFormChange } from "../hooks/handleFormChange"
+import { useAuthContext } from "../hooks/useAuthContext"
+import { RECIPE_ACTIONS } from "../main"
 
 export function EditRecipe() {
   const [error, setError] = useState(null)
   const [formData, setFormData] = useState(null)
   const [recipeImage, setRecipeImage] = useState(null)
   const { id } = useParams()
-  const { recipes } = useRecipeContext()
+  const { recipes, dispatch } = useRecipeContext()
+  const { user } = useAuthContext()
+  const navigate = useNavigate()
   function handleFormSubmit(e) {
     e.preventDefault()
     if (
@@ -21,40 +25,38 @@ export function EditRecipe() {
       setError("All fields must be filled")
       throw new Error("All fields must be filled")
     }
-    console.log(formData)
-    // const formDataObj = new FormData()
-    // formDataObj.append("title", formData.title)
-    // formDataObj.append("ingredients", formData.ingredients)
-    // formDataObj.append("instruction", formData.instruction)
-    // formDataObj.append("email", user.email)
-    // formDataObj.append("image", recipeImage)
-    // async function startEditing(formDataObjParameter) {
-    //   try {
-    //     let res = await fetch("/api/recipe", {
-    //       method: "POST",
-    //       body: formDataObjParameter,
-    //       headers: {
-    //         Authorization: `Bearer ${user.token}`,
-    //       },
-    //     })
-    //     let json = await res.json()
-    //     if (!res.ok) {
-    //       setError(json.error)
-    //       setIsLoading(false)
-    //     }
-    //     if (res.ok) {
-    //       dispatch({ type: RECIPE_ACTIONS.POST_RECIPE, payload: json })
-    //       setIsLoading(false)
-    //     }
-    //   } catch (error) {
-    //     console.error(error)
-    //   }
-    // }
-    // startEditing(formData)
+    const formDataObj = new FormData()
+    formDataObj.append("title", formData.title)
+    formDataObj.append("ingredients", formData.ingredients)
+    formDataObj.append("instruction", formData.instruction)
+    formDataObj.append("email", user.email)
+    formDataObj.append("image", recipeImage)
+    async function startEditing(formDataObjParameter) {
+      try {
+        let res = await fetch(`/api/recipe/${id}`, {
+          method: "PATCH",
+          body: formDataObjParameter,
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        let json = await res.json()
+        if (!res.ok) {
+          console.log(json)
+        }
+        if (res.ok) {
+          dispatch({ type: RECIPE_ACTIONS.PATCH_RECIPE, payload: json })
+          navigate("/")
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    startEditing(formDataObj)
   }
   useEffect(() => {
     if (recipes) {
-      setFormData(recipes.find((e) => e._id == id))
+      setFormData(recipes.find((e) => e?._id && e._id == id))
     }
   }, [recipes])
   return (
