@@ -67,14 +67,13 @@ async function updateRecipe(req, res) {
   try {
     const { title, ingredients, instruction } = req?.body
     const image = req?.file?.filename
+    let updatedJson = { title, ingredients, instruction }
+    if (image) {
+      updatedJson.image = image
+    }
     const recipe = await Recipe.findOneAndUpdate(
       { _id: req.params.id },
-      {
-        title,
-        ingredients,
-        instruction,
-        image,
-      },
+      updatedJson,
       { new: true } // This option ensures the updated document is returned
     )
     res.status(200).json(recipe)

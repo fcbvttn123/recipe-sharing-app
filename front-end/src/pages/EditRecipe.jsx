@@ -16,12 +16,7 @@ export function EditRecipe() {
   const navigate = useNavigate()
   function handleFormSubmit(e) {
     e.preventDefault()
-    if (
-      !recipeImage ||
-      !formData.title ||
-      !formData.ingredients ||
-      !formData.instruction
-    ) {
+    if (!formData.title || !formData.ingredients || !formData.instruction) {
       setError("All fields must be filled")
       throw new Error("All fields must be filled")
     }
