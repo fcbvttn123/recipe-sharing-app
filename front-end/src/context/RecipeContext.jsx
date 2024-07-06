@@ -24,13 +24,10 @@ export function recipeReducer(state, action) {
             return {
               ...action.payload,
             }
+          } else {
+            return e
           }
         }),
-      }
-    case RECIPE_ACTIONS.SET_LOADING:
-      return {
-        recipes: state.recipes,
-        loading: false,
       }
     default:
       return state
@@ -40,7 +37,6 @@ export function recipeReducer(state, action) {
 export function RecipeContextProvider({ children }) {
   const [state, dispatch] = useReducer(recipeReducer, {
     recipes: null,
-    loading: true,
   })
   useEffect(() => {
     async function getRecipes() {

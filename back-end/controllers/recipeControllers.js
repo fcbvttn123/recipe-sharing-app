@@ -74,7 +74,8 @@ async function updateRecipe(req, res) {
         ingredients,
         instruction,
         image,
-      }
+      },
+      { new: true } // This option ensures the updated document is returned
     )
     res.status(200).json(recipe)
   } catch (error) {
