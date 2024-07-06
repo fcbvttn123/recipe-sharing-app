@@ -24,7 +24,6 @@ export function EditRecipe() {
     formDataObj.append("title", formData.title)
     formDataObj.append("ingredients", formData.ingredients)
     formDataObj.append("instruction", formData.instruction)
-    formDataObj.append("email", user.email)
     formDataObj.append("image", recipeImage)
     async function startEditing(formDataObjParameter) {
       try {

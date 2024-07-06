@@ -66,7 +66,7 @@ async function deleteRecipe(req, res) {
 
 async function updateRecipe(req, res) {
   try {
-    const { title, ingredients, instruction, email } = req?.body
+    const { title, ingredients, instruction } = req?.body
     const image = req?.file?.filename
     let updatedJson = { title, ingredients, instruction }
     if (image) {
@@ -78,7 +78,8 @@ async function updateRecipe(req, res) {
     let userInfoSendingRequest = await User.findOne({
       _id: userIdSendingRequest,
     })
-    if (userInfoSendingRequest.email !== email) {
+    let recipeData = await Recipe.findById(req.params.id)
+    if (userInfoSendingRequest.email !== recipeData.email) {
       res.status(400).json({ message: "Unauthorized User !" })
     }
 
