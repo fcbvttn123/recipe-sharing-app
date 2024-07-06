@@ -1,4 +1,5 @@
 const Recipe = require("../models/recipeModels")
+const User = require("../models/userModels")
 const validator = require("validator")
 
 async function getRecipes(req, res) {
@@ -65,16 +66,26 @@ async function deleteRecipe(req, res) {
 
 async function updateRecipe(req, res) {
   try {
-    const { title, ingredients, instruction } = req?.body
+    const { title, ingredients, instruction, email } = req?.body
     const image = req?.file?.filename
     let updatedJson = { title, ingredients, instruction }
     if (image) {
       updatedJson.image = image
     }
+
+    // Check authorized user
+    let userIdSendingRequest = req.user._id.toString()
+    let userInfoSendingRequest = await User.findOne({
+      _id: userIdSendingRequest,
+    })
+    if (userInfoSendingRequest.email !== email) {
+      res.status(400).json({ message: "Unauthorized User !" })
+    }
+
     const recipe = await Recipe.findOneAndUpdate(
       { _id: req.params.id },
       updatedJson,
-      { new: true } // This option ensures the updated document is returned
+      { new: true }
     )
     res.status(200).json(recipe)
   } catch (error) {
