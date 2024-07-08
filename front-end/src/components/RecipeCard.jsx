@@ -116,7 +116,7 @@ export function RecipeCard({
         subheader={formatDistanceToNow(datePosted, { addSuffix: true })}
       />
       {/* Card Image */}
-      <CardMedia className={classes.media} image={`./images/${imgName}`} />
+      <CardMedia className={classes.media} image={`/images/${imgName}`} />
       {/* Card Content */}
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

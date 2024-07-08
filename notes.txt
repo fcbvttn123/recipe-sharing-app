@@ -2,12 +2,12 @@
 
     + JS - Stop Propagation 
 
+    + Security - only send token to server instead of user info like email, from the token sent, we get user info in server 
+
 
 
 
 + Problems 
-
-    + Error after updating a recipe
 
     + Add popup when users access protected routes without being logged in
 
