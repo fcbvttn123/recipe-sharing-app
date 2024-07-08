@@ -18,6 +18,8 @@ export function Home() {
               imgName={e.image}
               ingredients={e.ingredients}
               instructions={e.instruction}
+              likedBy={e.likedBy}
+              likeNumber={e.likedBy.length}
             />
           </Link>
         ))}

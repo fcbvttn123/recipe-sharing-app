@@ -50,15 +50,17 @@ export function RecipeCard({
   imgName,
   ingredients,
   instructions,
+  likedBy,
   showDeleteIcon,
   showVerticalDotsIcon,
+  likeNumber,
 }) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const { user } = useAuthContext()
   const { dispatch } = useRecipeContext()
-  const [liked, setLiked] = useState(false)
+  const [liked, setLiked] = useState(user && likedBy.includes(user.email))
   function handleDeleteEvent(e, idParam) {
     e.stopPropagation()
     e.preventDefault()
@@ -82,6 +84,32 @@ export function RecipeCard({
       }
     }
     startDeleteProcess(idParam)
+  }
+  async function handleHeartIconClickEvent(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    if (!liked) {
+      const res = await fetch(`/api/recipe/likeRecipe/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      const json = await res.json()
+      dispatch({ type: RECIPE_ACTIONS.PATCH_RECIPE, payload: json })
+    } else {
+      const res = await fetch(`/api/recipe/unlikeRecipe/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      const json = await res.json()
+      dispatch({ type: RECIPE_ACTIONS.PATCH_RECIPE, payload: json })
+    }
+    setLiked((prev) => !prev)
   }
   let cardMenuItems = []
   // If user email is the same as card email, push edit menu items into the array
@@ -140,14 +168,11 @@ export function RecipeCard({
       <CardActions disableSpacing>
         <IconButton
           aria-label="add to favorites"
-          onClick={(e) => {
-            e.stopPropagation()
-            e.preventDefault()
-            setLiked((prev) => !prev)
-          }}
+          onClick={handleHeartIconClickEvent}
         >
           <FavoriteIcon color={liked ? "secondary" : ""} />
         </IconButton>
+        <p>{likeNumber}</p>
         {user?.email == email && showDeleteIcon && (
           <IconButton
             aria-label="share"

@@ -17,6 +17,8 @@
 
     + Empty Post Form and Popup after submission 
 
+    + After signing out, the heart icon state keeps liked
+
 
 
 

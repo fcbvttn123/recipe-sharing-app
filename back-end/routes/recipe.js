@@ -9,6 +9,8 @@ const {
   createRecipe,
   deleteRecipe,
   updateRecipe,
+  likeRecipe,
+  unlikeRecipe,
 } = require("../controllers/recipeControllers")
 const authRequired = require("../middleware/authRequired")
 
@@ -24,5 +26,7 @@ router.get("/:id", authRequired, getRecipe)
 router.post("/", authRequired, upload.single("image"), createRecipe)
 router.delete("/:id", authRequired, deleteRecipe)
 router.patch("/:id", authRequired, upload.single("image"), updateRecipe)
+router.post("/likeRecipe/:id", authRequired, likeRecipe)
+router.post("/unlikeRecipe/:id", authRequired, unlikeRecipe)
 
 module.exports = router

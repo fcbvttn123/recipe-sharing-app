@@ -47,7 +47,11 @@ recipeSchema.methods.like = async function (email) {
 recipeSchema.methods.unlike = async function (email) {
   try {
     if (this.likedBy.includes(email)) {
-      this.likedBy.filter((e) => e !== email)
+      if (this.likedBy.length > 1) {
+        this.likedBy.filter((e) => e !== email)
+      } else {
+        this.likedBy = []
+      }
       await this.save()
     }
     return this

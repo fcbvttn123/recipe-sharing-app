@@ -104,6 +104,38 @@ async function updateRecipe(req, res) {
   }
 }
 
+async function likeRecipe(req, res) {
+  try {
+    let userData = await User.findOne({
+      _id: req.user._id.toString(),
+    })
+    let recipe = await Recipe.findById(req.params.id)
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" })
+    }
+    let updatedRecipe = await recipe.like(userData.email)
+    res.status(200).json(updatedRecipe)
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+}
+
+async function unlikeRecipe(req, res) {
+  try {
+    let userData = await User.findOne({
+      _id: req.user._id.toString(),
+    })
+    let recipe = await Recipe.findById(req.params.id)
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" })
+    }
+    let updatedRecipe = await recipe.unlike(userData.email)
+    res.status(200).json(updatedRecipe)
+  } catch (err) {
+    res.status(500).json({ message: err })
+  }
+}
+
 module.exports = {
   getRecipes,
   getYourRecipes,
@@ -111,4 +143,6 @@ module.exports = {
   createRecipe,
   deleteRecipe,
   updateRecipe,
+  likeRecipe,
+  unlikeRecipe,
 }

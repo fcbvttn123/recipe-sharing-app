@@ -20,6 +20,8 @@ export function RecipeDetails() {
           instructions={recipe.instruction}
           showDeleteIcon={true}
           showVerticalDotsIcon={true}
+          likedBy={recipe.likedBy}
+          likeNumber={recipe.likedBy.length}
         />
       ) : (
         <p>This recipe is not available anymore !</p>
