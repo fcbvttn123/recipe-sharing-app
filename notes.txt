@@ -11,7 +11,7 @@
 
     + Add popup when users access protected routes without being logged in
 
-    + Handle form error for recipe post form
 
-    + Picture is not shown in card details 
 
+
++ Continue: UI

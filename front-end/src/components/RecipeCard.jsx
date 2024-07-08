@@ -50,6 +50,8 @@ export function RecipeCard({
   imgName,
   ingredients,
   instructions,
+  showDeleteIcon,
+  showVerticalDotsIcon,
 }) {
   const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
@@ -80,23 +82,30 @@ export function RecipeCard({
     }
     startDeleteProcess(idParam)
   }
+  let cardMenuItems = []
+  // If user email is the same as card email, push edit menu items into the array
+  user?.email == email &&
+    cardMenuItems.push({ path: `/editRecipe/${id}`, text: "Edit" })
   return (
     <Card className={classes.root}>
-      {/* Card Header */}
+      {/* Card Header: Avatar, Title, Time, Vertical Dots */}
       <CardHeader
         avatar={<Avatar>{email[0].toUpperCase()}</Avatar>}
         action={
           <>
-            <IconButton
-              aria-label="settings"
-              onClick={(e) => {
-                e.stopPropagation()
-                e.preventDefault()
-                setAnchorEl(e.currentTarget)
-              }}
-            >
-              <MoreVertIcon />
-            </IconButton>
+            {/* Only render the vertical dots if cardMenuItems array length > 0 */}
+            {cardMenuItems.length > 0 && showVerticalDotsIcon && (
+              <IconButton
+                aria-label="settings"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  setAnchorEl(e.currentTarget)
+                }}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            )}
             <Menu
               id="simple-menu"
               anchorEl={anchorEl}
@@ -104,11 +113,14 @@ export function RecipeCard({
               open={Boolean(anchorEl)}
               onClose={() => setAnchorEl(null)}
             >
-              {user?.email == email && (
-                <Link to={`/editRecipe/${id}`}>
-                  <MenuItem onClick={() => setAnchorEl(null)}>Edit</MenuItem>
-                </Link>
-              )}
+              {user?.email == email &&
+                cardMenuItems.map((e) => (
+                  <Link to={e.path}>
+                    <MenuItem onClick={() => setAnchorEl(null)}>
+                      {e.text}
+                    </MenuItem>
+                  </Link>
+                ))}
             </Menu>
           </>
         }
@@ -123,7 +135,7 @@ export function RecipeCard({
           {ingredients}
         </Typography>
       </CardContent>
-      {/* Card Actions */}
+      {/* Card Actions: Heart Icon, Delete Icon, Expand Icon */}
       <CardActions disableSpacing>
         <IconButton
           aria-label="add to favorites"
@@ -135,7 +147,7 @@ export function RecipeCard({
         >
           <FavoriteIcon />
         </IconButton>
-        {user?.email == email && (
+        {user?.email == email && showDeleteIcon && (
           <IconButton
             aria-label="share"
             onClick={(e) => handleDeleteEvent(e, id)}

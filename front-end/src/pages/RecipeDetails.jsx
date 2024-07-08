@@ -18,6 +18,8 @@ export function RecipeDetails() {
           imgName={recipe.image}
           ingredients={recipe.ingredients}
           instructions={recipe.instruction}
+          showDeleteIcon={true}
+          showVerticalDotsIcon={true}
         />
       ) : (
         <p>This recipe is not available anymore !</p>
