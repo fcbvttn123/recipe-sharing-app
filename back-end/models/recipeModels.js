@@ -24,8 +24,36 @@ const recipeSchema = new Schema(
       type: String,
       require: true,
     },
+    likedBy: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 )
+
+recipeSchema.methods.like = async function (email) {
+  try {
+    if (!this.likedBy.includes(email)) {
+      this.likedBy.push(email)
+      await this.save()
+    }
+    return this
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+recipeSchema.methods.unlike = async function (email) {
+  try {
+    if (this.likedBy.includes(email)) {
+      this.likedBy.filter((e) => e !== email)
+      await this.save()
+    }
+    return this
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 module.exports = mongoose.model("Recipe", recipeSchema)

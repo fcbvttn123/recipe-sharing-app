@@ -4,12 +4,18 @@
 
     + Security - only send token to server instead of user info like email, from the token sent, we get user info in server 
 
+    + Difference between Static Methods (schema.statics) and Instance Methods (schema.methods) in Mongoose 
+
+    + Mongoose: this.saved() 
+
 
 
 
 + Problems 
 
     + Add popup when users access protected routes without being logged in
+
+    + Empty Post Form and Popup after submission 
 
 
 

@@ -58,6 +58,7 @@ export function RecipeCard({
   const [anchorEl, setAnchorEl] = useState(null)
   const { user } = useAuthContext()
   const { dispatch } = useRecipeContext()
+  const [liked, setLiked] = useState(false)
   function handleDeleteEvent(e, idParam) {
     e.stopPropagation()
     e.preventDefault()
@@ -142,10 +143,10 @@ export function RecipeCard({
           onClick={(e) => {
             e.stopPropagation()
             e.preventDefault()
-            console.log("Liked")
+            setLiked((prev) => !prev)
           }}
         >
-          <FavoriteIcon />
+          <FavoriteIcon color={liked ? "secondary" : ""} />
         </IconButton>
         {user?.email == email && showDeleteIcon && (
           <IconButton
