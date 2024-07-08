@@ -90,7 +90,7 @@ async function updateRecipe(req, res) {
     })
     let recipeData = await Recipe.findById(req.params.id)
     if (userInfoSendingRequest.email !== recipeData.email) {
-      res.status(400).json({ message: "Unauthorized User !" })
+      return res.status(400).json({ message: "Unauthorized User !" })
     }
 
     const recipe = await Recipe.findOneAndUpdate(
