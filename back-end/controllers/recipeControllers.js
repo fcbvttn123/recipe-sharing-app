@@ -56,6 +56,16 @@ async function createRecipe(req, res) {
 }
 
 async function deleteRecipe(req, res) {
+  // Check authorized user
+  let userIdSendingRequest = req.user._id.toString()
+  let userInfoSendingRequest = await User.findOne({
+    _id: userIdSendingRequest,
+  })
+  let recipeData = await Recipe.findById(req.params.id)
+  if (userInfoSendingRequest.email !== recipeData.email) {
+    return res.status(400).json({ message: "Unauthorized User !" })
+  }
+
   try {
     const recipe = await Recipe.findOneAndDelete({ _id: req.params.id })
     res.status(200).json(recipe)

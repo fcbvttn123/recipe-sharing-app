@@ -71,6 +71,8 @@ export function RecipeCard({
         let json = await res.json()
         if (res.ok) {
           dispatch({ type: RECIPE_ACTIONS.DELETE_RECIPE, payload: deletedId })
+        } else {
+          console.log(json)
         }
       } catch (err) {
         console.error(err)
