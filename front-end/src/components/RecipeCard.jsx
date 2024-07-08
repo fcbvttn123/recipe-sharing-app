@@ -174,6 +174,7 @@ export function RecipeCard({
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>{instructions}</Typography>
+          <p className="text-slate-400 mt-12 text-sm">created by {email}</p>
         </CardContent>
       </Collapse>
     </Card>
