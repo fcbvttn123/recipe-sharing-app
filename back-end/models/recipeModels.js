@@ -48,11 +48,12 @@ recipeSchema.methods.unlike = async function (email) {
   try {
     if (this.likedBy.includes(email)) {
       if (this.likedBy.length > 1) {
-        this.likedBy.filter((e) => e !== email)
+        this.likedBy = this.likedBy.filter((e) => e !== email)
+        await this.save()
       } else {
-        this.likedBy = []
+        this.likedBy = this.likedBy = []
+        await this.save()
       }
-      await this.save()
     }
     return this
   } catch (err) {
