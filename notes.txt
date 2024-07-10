@@ -1,5 +1,7 @@
 + Learnings 
 
+    + Multer 
+
     + JS - Stop Propagation 
 
     + Security - only send token to server instead of user info like email, from the token sent, we get user info in server 

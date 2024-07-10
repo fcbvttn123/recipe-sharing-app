@@ -1,11 +1,17 @@
-import { Button, TextField } from "@material-ui/core"
+import { Button, Snackbar, TextField } from "@material-ui/core"
+import MuiAlert from "@material-ui/lab/Alert"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useState } from "react"
 import { handleFormChange } from "../hooks/handleFormChange"
 import { useRecipeContext } from "../hooks/useRecipeContext"
 import { RECIPE_ACTIONS } from "../main"
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />
+}
+
 export function PostRecipe() {
+  // States
   const { user } = useAuthContext()
   const { dispatch } = useRecipeContext()
   const [recipeImage, setRecipeImage] = useState(null)
@@ -16,6 +22,8 @@ export function PostRecipe() {
   })
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+  // Functions
   function handleFormSubmit(e) {
     e.preventDefault()
     if (
@@ -51,6 +59,12 @@ export function PostRecipe() {
         if (res.ok) {
           dispatch({ type: RECIPE_ACTIONS.POST_RECIPE, payload: json })
           setIsLoading(false)
+          setOpenSnackbar(true)
+          setFormData({
+            title: "",
+            ingredients: "",
+            instruction: "",
+          })
         }
       } catch (error) {
         console.error(error)
@@ -58,7 +72,7 @@ export function PostRecipe() {
     }
     startPosting(formDataObj)
   }
-  // title, ingredients, instruction, email
+  // UI
   return (
     <>
       {user?.token ? (
@@ -124,6 +138,17 @@ export function PostRecipe() {
           <h1>Please login to post your own recipe!</h1>
         </div>
       )}
+
+      {/* Snackbar: notification of form submission */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={(e) => setOpenSnackbar(false)}
+      >
+        <Alert onClose={(e) => setOpenSnackbar(false)} severity="success">
+          Form Submitted!
+        </Alert>
+      </Snackbar>
     </>
   )
 }

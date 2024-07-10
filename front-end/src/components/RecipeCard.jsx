@@ -161,7 +161,7 @@ export function RecipeCard({
       {/* Card Content */}
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {ingredients}
+          <span className="font-bold">Ingredients:</span> {ingredients}
         </Typography>
       </CardContent>
       {/* Card Actions: Heart Icon, Delete Icon, Expand Icon */}
