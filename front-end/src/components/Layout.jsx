@@ -24,7 +24,7 @@ import MenuIcon from "@material-ui/icons/Menu"
 import HomeIcon from "@material-ui/icons/Home"
 import CreateIcon from "@material-ui/icons/Create"
 import { useAuthContext } from "../hooks/useAuthContext"
-import { Avatar } from "./Avatar"
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { AUTH_ACTIONS } from "../main"
 
@@ -78,6 +78,7 @@ export function Layout(props) {
   const [links, setLinks] = useState([
     { icon: <HomeIcon />, text: "All Recipes", path: "/" },
     { icon: <CreateIcon />, text: "Post Your Recipe", path: "/postRecipe" },
+    { icon: <AssignmentIndIcon />, text: "Your Recipes", path: "/yourRecipes" },
   ])
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, dispatch } = useAuthContext()
