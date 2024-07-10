@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { RecipeCard } from "../components/RecipeCard"
+import { CircularProgress } from "@material-ui/core"
 
 export function YourRecipes() {
   const { user } = useAuthContext()
@@ -14,7 +15,9 @@ export function YourRecipes() {
           },
         })
         let json = await res.json()
-        setRecipes(json)
+        setTimeout(() => {
+          setRecipes(json)
+        }, 500)
       } catch (err) {
         console.error(err)
       }
@@ -23,7 +26,7 @@ export function YourRecipes() {
   }, [])
   return (
     <div className="flex flex-wrap justify-center items-center gap-8">
-      {recipes &&
+      {recipes ? (
         recipes.map((e) => (
           <RecipeCard
             key={e._id}
@@ -39,7 +42,10 @@ export function YourRecipes() {
             showDeleteIcon={true}
             showVerticalDotsIcon={true}
           />
-        ))}
+        ))
+      ) : (
+        <CircularProgress />
+      )}
     </div>
   )
 }
