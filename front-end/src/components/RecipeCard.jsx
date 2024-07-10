@@ -161,7 +161,8 @@ export function RecipeCard({
       {/* Card Content */}
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          <span className="font-bold">Ingredients:</span> {ingredients}
+          <span className="font-bold">Ingredients:</span>{" "}
+          <pre className="whitespace-pre-wrap break-words">{ingredients}</pre>
         </Typography>
       </CardContent>
       {/* Card Actions: Heart Icon, Delete Icon, Expand Icon */}
@@ -199,7 +200,11 @@ export function RecipeCard({
       {/* Card Expanded */}
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{instructions}</Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <pre className="whitespace-pre-wrap break-words">
+              {instructions}
+            </pre>
+          </Typography>
           <p className="text-slate-400 mt-12 text-sm">created by {email}</p>
         </CardContent>
       </Collapse>

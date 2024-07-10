@@ -10,6 +10,12 @@
 
     + Mongoose: this.saved() 
 
+    + To preserve line breaks while also ensuring that long lines wrap within the available width
+
+        white-space: pre-wrap; /* This will preserve whitespace and line breaks */
+            
+        word-wrap: break-word;  /* This will ensure that long words are broken to fit the container width */
+
 
 
 
