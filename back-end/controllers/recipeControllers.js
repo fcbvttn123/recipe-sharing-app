@@ -12,12 +12,14 @@ async function getRecipes(req, res) {
 }
 
 async function getYourRecipes(req, res) {
-  const { email } = req.params
   try {
-    if (!validator.isEmail(email)) {
+    let userData = await User.findOne({
+      _id: req.user._id.toString(),
+    })
+    if (!validator.isEmail(userData.email)) {
       throw Error("Email not valid")
     }
-    const yourRecipes = await Recipe.find({ email })
+    const yourRecipes = await Recipe.find({ email: userData.email })
     if (yourRecipes.length == 0) {
       return res
         .status(404)

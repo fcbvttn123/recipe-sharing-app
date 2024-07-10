@@ -7,6 +7,7 @@ import { Signup } from "./pages/Signup"
 import AuthRequired from "./components/AuthRequired"
 import { RecipeDetails } from "./pages/RecipeDetails"
 import { EditRecipe } from "./pages/EditRecipe"
+import { YourRecipes } from "./pages/YourRecipes"
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           <Route path="/editRecipe/:id" element={<EditRecipe />} />
           <Route element={<AuthRequired />}>
             <Route path="/postRecipe" element={<PostRecipe />} />
+          </Route>
+          <Route element={<AuthRequired />}>
+            <Route path="/yourRecipes" element={<YourRecipes />} />
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />

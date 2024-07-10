@@ -21,7 +21,7 @@ const upload = multer({
 
 // Recipe Routes
 router.get("/", getRecipes)
-router.get("/recipesOf/:email", getYourRecipes)
+router.get("/yourRecipes", authRequired, getYourRecipes)
 router.get("/:id", authRequired, getRecipe)
 router.post("/", authRequired, upload.single("image"), createRecipe)
 router.delete("/:id", authRequired, deleteRecipe)
