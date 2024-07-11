@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom"
 import { handleFormChange } from "../hooks/handleFormChange"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { AUTH_ACTIONS } from "../main"
+import { signInWithPopup } from "firebase/auth"
+import { auth, provider } from "../config/firebase"
 
 export function Login() {
   const [formData, setFormData] = useState({
@@ -46,6 +48,10 @@ export function Login() {
     }
     startLogin(formData.email, formData.password)
   }
+  async function handleGoogleLogin() {
+    let res = await signInWithPopup(auth, provider)
+    console.log(res.user.email)
+  }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       {/* Login Text */}
@@ -83,6 +89,15 @@ export function Login() {
           Login
         </Button>
       </form>
+      {/* Google Login Button */}
+      <Button
+        variant="contained"
+        color="primary"
+        className="w-52"
+        onClick={handleGoogleLogin}
+      >
+        Google Login
+      </Button>
       {/* Form Error Text */}
       {error && <p className="text-red-600">{error}</p>}
       {/* Back Button */}
