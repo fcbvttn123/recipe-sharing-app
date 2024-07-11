@@ -1,9 +1,10 @@
-import { Button, TextField, Typography } from "@material-ui/core"
+import { Button, Snackbar, TextField, Typography } from "@material-ui/core"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { handleFormChange } from "../hooks/handleFormChange"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { AUTH_ACTIONS } from "../main"
+import Alert from "@material-ui/lab/Alert"
 
 export function Signup() {
   const { user, dispatch } = useAuthContext()
@@ -13,6 +14,7 @@ export function Signup() {
   })
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
   function handleFormSubmit(e) {
     e.preventDefault()
     async function startSignup() {
@@ -38,6 +40,13 @@ export function Signup() {
           dispatch({ type: AUTH_ACTIONS.LOGIN, payload: json })
           // update loading state
           setIsLoading(false)
+          // Empty Form
+          setFormData({
+            email: "",
+            password: "",
+          })
+          // Open snackbar
+          setOpenSnackbar(true)
         }
       } catch (error) {
         console.error(error)
@@ -92,6 +101,16 @@ export function Signup() {
           </Button>
         </Link>
       </div>
+      {/* Snackbar */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert onClose={() => setOpenSnackbar(false)} severity="success">
+          Account created!
+        </Alert>
+      </Snackbar>
     </div>
   )
 }

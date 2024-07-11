@@ -21,10 +21,6 @@
 
 + Problems 
 
-    + Empty Sign-up Form and Popup after submission 
-
-    + When user does not have any recipe, the route /yourRecipes gets blanked
-
 
 
 

@@ -14,13 +14,11 @@ export function YourRecipes() {
     This code is used to render content conditionally 
   */
   let content = null
+  // If user does not have any recipes, render text to screen
   if (recipes?.message == "No recipes found for this email") {
-    // If user does not have any recipes, render text to screen
-    console.log(recipes)
     content = <p>No recipes found for this email</p>
     // If user has recipes, render recipe cards
   } else if (recipes?.length > 0) {
-    console.log(recipes)
     content = recipes.map((e) => (
       <RecipeCard
         key={e._id}
@@ -39,7 +37,6 @@ export function YourRecipes() {
     ))
     // If the fetch process is loading, render spinning animation
   } else {
-    console.log(recipes)
     content = <CircularProgress />
   }
 
