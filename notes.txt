@@ -21,11 +21,9 @@
 
 + Problems 
 
-    + Add popup when users access protected routes without being logged in
+    + Empty Sign-up Form and Popup after submission 
 
-    + Empty Post Form and Popup after submission 
-
-    + After signing out, the heart icon state keeps liked
+    + When user does not have any recipe, the route /yourRecipes gets blanked
 
 
 
