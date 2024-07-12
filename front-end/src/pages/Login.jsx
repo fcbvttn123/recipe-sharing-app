@@ -49,8 +49,73 @@ export function Login() {
     startLogin(formData.email, formData.password)
   }
   async function handleGoogleLogin() {
-    let res = await signInWithPopup(auth, provider)
-    console.log(res.user.email)
+    async function startSignup(email, password) {
+      let res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      })
+      let json = await res.json()
+      // save the user to local storage
+      localStorage.setItem(
+        "RECIPE-SHARING-APP-USER-TOKEN",
+        JSON.stringify(json)
+      )
+      // update the auth context
+      dispatch({ type: AUTH_ACTIONS.LOGIN, payload: json })
+    }
+    async function startLogin(email, password) {
+      try {
+        let res = await fetch("/api/auth/login", {
+          method: "POST",
+          body: JSON.stringify({ email, password }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        let json = await res.json()
+        localStorage.setItem(
+          "RECIPE-SHARING-APP-USER-TOKEN",
+          JSON.stringify(json)
+        )
+        dispatch({ type: AUTH_ACTIONS.LOGIN, payload: json })
+        navigate("/")
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    let googleLoginRes = await signInWithPopup(auth, provider)
+    let apiCall = await fetch("/api/auth/checkIfGoogleAccountExists", {
+      method: "POST",
+      body: JSON.stringify({ email: googleLoginRes.user.email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    let json = await apiCall.json()
+    if (
+      json.message ==
+      "this email is added to Google_Account table, start sign-up process for Users table"
+    ) {
+      let startSignUpRes = await startSignup(
+        googleLoginRes.user.email,
+        import.meta.env.VITE__GOOGLE_ACCOUNT_PASSWORD
+      )
+      navigate("/")
+    } else if (
+      json.message ==
+      "this google account is already registered before, start login"
+    ) {
+      await startLogin(
+        googleLoginRes.user.email,
+        import.meta.env.VITE__GOOGLE_ACCOUNT_PASSWORD
+      )
+    } else if (json.message == "Email already in use!") {
+      setError("Email already in use, please enter your password!")
+    }
   }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -99,7 +164,7 @@ export function Login() {
         Google Login
       </Button>
       {/* Form Error Text */}
-      {error && <p className="text-red-600">{error}</p>}
+      {error && <p className="text-red-600 mt-7">{error}</p>}
       {/* Back Button */}
       <div className="absolute left-5 top-5">
         <Link to={".."} relative="path">
