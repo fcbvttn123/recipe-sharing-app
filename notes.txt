@@ -16,6 +16,14 @@
             
         word-wrap: break-word;  /* This will ensure that long words are broken to fit the container width */
 
+    + .env file in react 
+
+        VITE__FIREBASE_API_KEY=""
+
+        import.meta.env.VITE__FIREBASE_API_KEY
+
+
+
 
 
 
