@@ -157,9 +157,11 @@ export function Login() {
       {/* Google Login Button */}
       <Button
         variant="contained"
-        color="primary"
         className="w-52"
         onClick={handleGoogleLogin}
+        startIcon={
+          <img className="w-5 h-5" src="/images/google.png" alt="" srcset="" />
+        }
       >
         Google Login
       </Button>
