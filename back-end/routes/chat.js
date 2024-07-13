@@ -1,8 +1,8 @@
 const express = require("express")
 const router = express.Router()
+const { createMessagingChannel } = require("../controllers/chatControllers")
+const authRequired = require("../middleware/authRequired")
 
-router.post("/test", (req, res) => {
-  res.json({ message: "test successfully" })
-})
+router.post("/createMessagingChannel", authRequired, createMessagingChannel)
 
 module.exports = router
