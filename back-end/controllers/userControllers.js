@@ -2,13 +2,13 @@ const jwt = require("jsonwebtoken")
 const User = require("../models/userModels")
 const StreamChat = require("stream-chat").StreamChat
 
+const serverClient = new StreamChat(
+  "d8t3tcvbutju",
+  "4yz8prf2smx6tycskkyvus5jesnx2q7jxsvpex5y6jm6b58hv9z58sbuf3vj3n2v"
+)
+
 function createStreamToken(_id) {
-  const serverClient = new StreamChat(
-    "d8t3tcvbutju",
-    "4yz8prf2smx6tycskkyvus5jesnx2q7jxsvpex5y6jm6b58hv9z58sbuf3vj3n2v"
-  )
-  const token = serverClient.createToken(_id)
-  return token
+  return serverClient.createToken(_id)
 }
 
 function createToken(_id) {
@@ -21,6 +21,13 @@ async function signupUser(req, res) {
     const user = await User.signup(email, password)
     const token = createToken(user._id)
     const streamToken = createStreamToken(user.email)
+    const syncingUserResponse = await serverClient.upsertUsers([
+      {
+        id: user._id,
+        role: "admin",
+        email: user.email,
+      },
+    ])
     res.status(200).json({ email, token, streamToken })
   } catch (error) {
     res.status(400).json({ error: error.message })
