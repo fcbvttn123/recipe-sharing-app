@@ -32,7 +32,8 @@ async function loginUser(req, res) {
   try {
     const user = await User.login(email, password)
     const token = createToken(user._id)
-    res.status(200).json({ email, token })
+    const streamToken = createStreamToken(user.email)
+    res.status(200).json({ email, token, streamToken })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
