@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 require("dotenv").config()
 const recipeRoutes = require("./routes/recipe")
 const userRoutes = require("./routes/user")
+const chatRouters = require("./routes/chat")
 
 // Initialize Express App
 const app = express()
@@ -13,6 +14,7 @@ app.use(express.json())
 // Routes
 app.use("/api/auth", userRoutes)
 app.use("/api/recipe", recipeRoutes)
+app.use("/api/chat", chatRouters)
 
 // Connecting to db
 mongoose
