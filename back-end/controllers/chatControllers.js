@@ -12,10 +12,12 @@ async function createMessagingChannel(req, res) {
     email: anotherUserEmail,
   })
   try {
-    const channel = serverClient.channel("messaging")
+    const channel = serverClient.channel("messaging", {
+      created_by_id: userIdSendingRequest,
+      members: [userIdSendingRequest, anotherUser._id.toString()],
+    })
     await channel.create()
-    await channel.addMembers([userIdSendingRequest, anotherUser._id])
-    res.status(200).json({ success: true })
+    res.status(200).json({ message: "Channel created!" })
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
