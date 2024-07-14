@@ -8,6 +8,7 @@ import AuthRequired from "./components/AuthRequired"
 import { RecipeDetails } from "./pages/RecipeDetails"
 import { EditRecipe } from "./pages/EditRecipe"
 import { YourRecipes } from "./pages/YourRecipes"
+import { Chat } from "./pages/Chat"
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           <Route element={<AuthRequired />}>
             <Route path="/yourRecipes" element={<YourRecipes />} />
           </Route>
+        </Route>
+        <Route element={<AuthRequired />}>
+          <Route path="/chat" element={<Chat />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

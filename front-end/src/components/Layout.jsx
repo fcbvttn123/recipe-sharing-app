@@ -27,6 +27,7 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { AUTH_ACTIONS } from "../main"
+import ChatIcon from "@material-ui/icons/Chat"
 
 const drawerWidth = 240
 const useStyles = makeStyles((theme) => ({
@@ -79,6 +80,7 @@ export function Layout(props) {
     { icon: <HomeIcon />, text: "All Recipes", path: "/" },
     { icon: <CreateIcon />, text: "Post Your Recipe", path: "/postRecipe" },
     { icon: <AssignmentIndIcon />, text: "Your Recipes", path: "/yourRecipes" },
+    { icon: <ChatIcon />, text: "Chat", path: "/chat" },
   ])
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, dispatch } = useAuthContext()
