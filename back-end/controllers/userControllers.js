@@ -3,8 +3,8 @@ const User = require("../models/userModels")
 const StreamChat = require("stream-chat").StreamChat
 
 const serverClient = new StreamChat(
-  "d8t3tcvbutju",
-  "4yz8prf2smx6tycskkyvus5jesnx2q7jxsvpex5y6jm6b58hv9z58sbuf3vj3n2v"
+  process.env.STREAM_API_KEY,
+  process.env.STREAM_API_SECRET
 )
 
 function createStreamToken(_id) {
