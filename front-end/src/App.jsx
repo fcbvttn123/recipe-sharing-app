@@ -8,7 +8,7 @@ import AuthRequired from "./components/AuthRequired"
 import { RecipeDetails } from "./pages/RecipeDetails"
 import { EditRecipe } from "./pages/EditRecipe"
 import { YourRecipes } from "./pages/YourRecipes"
-import { Chat } from "./pages/Chat"
+import { ChatPage } from "./pages/ChatPage"
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
           </Route>
         </Route>
         <Route element={<AuthRequired />}>
-          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat" element={<ChatPage />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
