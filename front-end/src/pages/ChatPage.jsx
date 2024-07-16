@@ -9,15 +9,16 @@ import {
   makeStyles,
 } from "@material-ui/core"
 import {
-  Chat,
   Channel,
-  useCreateChatClient,
   ChannelHeader,
+  Chat,
   MessageInput,
   MessageList,
   Thread,
+  useCreateChatClient,
   Window,
 } from "stream-chat-react"
+import "stream-chat-react/dist/css/index.css"
 
 const drawerWidth = 280
 const useStyles = makeStyles((theme) => ({
@@ -90,9 +91,9 @@ export function ChatPage() {
   }, [])
 
   return (
-    <div>
+    <>
       {channel && client ? (
-        <Chat client={client}>
+        <Chat client={client} theme="messaging light">
           <Channel channel={channel}>
             <Window>
               <ChannelHeader />
@@ -113,6 +114,6 @@ export function ChatPage() {
           {drawer}
         </Drawer>
       )}
-    </div>
+    </>
   )
 }
