@@ -8,7 +8,16 @@ import {
   ListItemText,
   makeStyles,
 } from "@material-ui/core"
-import { Chat, useCreateChatClient } from "stream-chat-react"
+import {
+  Chat,
+  Channel,
+  useCreateChatClient,
+  ChannelHeader,
+  MessageInput,
+  MessageList,
+  Thread,
+  Window,
+} from "stream-chat-react"
 
 const drawerWidth = 280
 const useStyles = makeStyles((theme) => ({
@@ -32,24 +41,25 @@ export function ChatPage() {
       <List></List>
       <Divider />
       {emails &&
-        emails.map((e) => (
-          <>
+        emails.map((e, i) => (
+          <div key={i}>
             <List>
               <ListItem button onClick={handleClick} data-email={e.email}>
                 <ListItemText primary={e.email} />
               </ListItem>
             </List>
             <Divider />
-          </>
+          </div>
         ))}
     </div>
   )
-  const client = useCreateChatClient({
-    apiKey: import.meta.env.VITE__STREAM_API_KEY,
-    tokenOrProvider: user.streamToken,
-    userData: { id: user.email },
-  })
-  console.log(client)
+  const client =
+    user &&
+    useCreateChatClient({
+      apiKey: import.meta.env.VITE__STREAM_API_KEY,
+      tokenOrProvider: user.streamToken,
+      userData: { id: user.id },
+    })
   const [channel, setChannel] = useState(null)
 
   async function handleClick(e) {
@@ -81,15 +91,28 @@ export function ChatPage() {
 
   return (
     <div>
-      <Drawer
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-        variant="permanent"
-        open
-      >
-        {drawer}
-      </Drawer>
+      {channel && client ? (
+        <Chat client={client}>
+          <Channel channel={channel}>
+            <Window>
+              <ChannelHeader />
+              <MessageList />
+              <MessageInput />
+            </Window>
+            <Thread />
+          </Channel>
+        </Chat>
+      ) : (
+        <Drawer
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+          variant="permanent"
+          open
+        >
+          {drawer}
+        </Drawer>
+      )}
     </div>
   )
 }
