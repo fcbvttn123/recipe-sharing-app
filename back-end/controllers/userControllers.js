@@ -21,7 +21,7 @@ async function signupUser(req, res) {
   try {
     const user = await User.signup(email, password)
     const token = createToken(user._id)
-    const streamToken = createStreamToken(user.email)
+    const streamToken = createStreamToken(user._id.toString())
     const syncingUserResponse = await serverClient.upsertUsers([
       {
         id: user._id,
@@ -29,7 +29,7 @@ async function signupUser(req, res) {
         email: user.email,
       },
     ])
-    res.status(200).json({ email, token, streamToken })
+    res.status(200).json({ id: user._id, email, token, streamToken })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
@@ -40,8 +40,8 @@ async function loginUser(req, res) {
   try {
     const user = await User.login(email, password)
     const token = createToken(user._id)
-    const streamToken = createStreamToken(user.email)
-    res.status(200).json({ email, token, streamToken })
+    const streamToken = createStreamToken(user._id.toString())
+    res.status(200).json({ id: user._id, email, token, streamToken })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }

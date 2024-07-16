@@ -32,24 +32,23 @@ export function ChatPage() {
       <List></List>
       <Divider />
       {emails &&
-        emails.map((e) => (
-          <>
+        emails.map((e, i) => (
+          <div key={i}>
             <List>
               <ListItem button onClick={handleClick} data-email={e.email}>
                 <ListItemText primary={e.email} />
               </ListItem>
             </List>
             <Divider />
-          </>
+          </div>
         ))}
     </div>
   )
   const client = useCreateChatClient({
     apiKey: import.meta.env.VITE__STREAM_API_KEY,
     tokenOrProvider: user.streamToken,
-    userData: { id: user.email },
+    userData: { id: user.id },
   })
-  console.log(client)
   const [channel, setChannel] = useState(null)
 
   async function handleClick(e) {
