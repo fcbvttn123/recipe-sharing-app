@@ -11,6 +11,7 @@ import {
   useCreateChatClient,
   Window,
 } from "stream-chat-react"
+import { EmojiPicker } from "stream-chat-react/emojis"
 import "stream-chat-react/dist/css/index.css"
 
 export function ChatPage() {
@@ -34,7 +35,7 @@ export function ChatPage() {
       {client ? (
         <Chat client={client}>
           <ChannelList filters={filters} sort={sort} options={options} />
-          <Channel>
+          <Channel EmojiPicker={EmojiPicker}>
             <Window>
               <ChannelHeader />
               <MessageList />
