@@ -20,7 +20,7 @@ import { useRecipeContext } from "../hooks/useRecipeContext"
 import { RECIPE_ACTIONS } from "../main"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +61,7 @@ export function RecipeCard({
   const { user } = useAuthContext()
   const { dispatch } = useRecipeContext()
   const [liked, setLiked] = useState(user && likedBy.includes(user.email))
+  const navigate = useNavigate()
   function handleDeleteEvent(e, idParam) {
     e.stopPropagation()
     e.preventDefault()
@@ -110,6 +111,22 @@ export function RecipeCard({
       dispatch({ type: RECIPE_ACTIONS.PATCH_RECIPE, payload: json })
     }
     setLiked((prev) => !prev)
+  }
+  function handleEmailClick(e) {
+    const email = e.target.textContent
+    async function createChannel(email) {
+      let res = await fetch("/api/chat/createMessagingChannel", {
+        method: "POST",
+        body: JSON.stringify({ anotherUserEmail: email }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      let json = await res.json()
+      navigate("/chat")
+    }
+    createChannel(email)
   }
   let cardMenuItems = []
   // If user email is the same as card email, push edit menu items into the array
@@ -205,7 +222,9 @@ export function RecipeCard({
               {instructions}
             </pre>
           </Typography>
-          <p className="text-slate-400 mt-12 text-sm">created by {email}</p>
+          <p className="text-slate-400 mt-12 text-sm">
+            created by <button onClick={handleEmailClick}>{email}</button>
+          </p>
         </CardContent>
       </Collapse>
     </Card>

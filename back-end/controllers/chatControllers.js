@@ -18,6 +18,10 @@ async function createMessagingChannel(req, res) {
       members: [userIdSendingRequest, anotherUser._id.toString()],
     })
     await channel.create()
+    await channel.update({
+      name: anotherUserEmail,
+      image: "https://getstream.io/random_png/?name=react",
+    })
     res.status(200).json({ message: "Channel created!", channelId })
   } catch (error) {
     res.status(500).json({ error: error.message })

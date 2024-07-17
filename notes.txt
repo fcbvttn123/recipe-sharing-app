@@ -29,6 +29,8 @@
 
 + Problems 
 
+    + When you deleted your recipe in /yourRecipe route, the recipe is not updated immediately
+
 
 
 

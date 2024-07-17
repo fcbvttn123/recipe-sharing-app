@@ -25,8 +25,7 @@ async function signupUser(req, res) {
     const syncingUserResponse = await serverClient.upsertUsers([
       {
         id: user._id,
-        role: "admin",
-        email: user.email,
+        image: "https://api.dicebear.com/9.x/adventurer/svg",
       },
     ])
     res.status(200).json({ id: user._id, email, token, streamToken })
