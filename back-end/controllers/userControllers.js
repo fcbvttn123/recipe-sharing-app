@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken")
 const User = require("../models/userModels")
-const { json } = require("express")
 const StreamChat = require("stream-chat").StreamChat
 
 const serverClient = new StreamChat(
@@ -25,7 +24,7 @@ async function signupUser(req, res) {
     const syncingUserResponse = await serverClient.upsertUsers([
       {
         id: user._id,
-        image: "https://api.dicebear.com/9.x/adventurer/svg",
+        image: user.avt,
       },
     ])
     res.status(200).json({ id: user._id, email, token, streamToken })

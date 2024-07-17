@@ -15,6 +15,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    avt: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 )
@@ -38,7 +42,11 @@ userSchema.statics.signup = async function (email, password) {
   // Hash
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
-  const user = await this.create({ email, password: hash })
+  const user = await this.create({
+    email,
+    password: hash,
+    avt: `https://ui-avatars.com/api/?name=${email}&background=random`,
+  })
   return user
 }
 
