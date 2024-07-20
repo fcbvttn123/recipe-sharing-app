@@ -11,19 +11,20 @@ export function Signup() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    displayName: "",
   })
   const [error, setError] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
   const [openSnackbar, setOpenSnackbar] = useState(false)
   function handleFormSubmit(e) {
     e.preventDefault()
-    async function startSignup() {
+    async function startSignup(objData, emptyFormFunction) {
       setIsLoading(true)
       try {
         let res = await fetch("/api/auth/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(objData),
         })
         let json = await res.json()
         if (!res.ok) {
@@ -41,9 +42,10 @@ export function Signup() {
           // update loading state
           setIsLoading(false)
           // Empty Form
-          setFormData({
+          emptyFormFunction({
             email: "",
             password: "",
+            displayName: "",
           })
           // Open snackbar
           setOpenSnackbar(true)
@@ -52,7 +54,7 @@ export function Signup() {
         console.error(error)
       }
     }
-    startSignup()
+    startSignup(formData, setFormData)
   }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -81,6 +83,14 @@ export function Signup() {
           onChange={(e) => handleFormChange(e, setFormData)}
           value={formData.password}
           name="password"
+        />
+        <TextField
+          id="filled-basic displayName"
+          label="Display Name"
+          variant="filled"
+          onChange={(e) => handleFormChange(e, setFormData)}
+          value={formData.displayName}
+          name="displayName"
         />
         <Button
           variant="contained"

@@ -16,9 +16,9 @@ function createToken(_id) {
 }
 
 async function signupUser(req, res) {
-  const { email, password } = req.body
+  const { email, password, displayName } = req.body
   try {
-    const user = await User.signup(email, password)
+    const user = await User.signup(email, password, displayName)
     const token = createToken(user._id)
     const streamToken = createStreamToken(user._id.toString())
     const syncingUserResponse = await serverClient.upsertUsers([
@@ -27,7 +27,9 @@ async function signupUser(req, res) {
         image: user.avt,
       },
     ])
-    res.status(200).json({ id: user._id, email, token, streamToken })
+    res
+      .status(200)
+      .json({ id: user._id, email, token, streamToken, displayName })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
@@ -39,7 +41,15 @@ async function loginUser(req, res) {
     const user = await User.login(email, password)
     const token = createToken(user._id)
     const streamToken = createStreamToken(user._id.toString())
-    res.status(200).json({ id: user._id, email, token, streamToken })
+    res
+      .status(200)
+      .json({
+        id: user._id,
+        email,
+        token,
+        streamToken,
+        displayName: user.displayName,
+      })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }

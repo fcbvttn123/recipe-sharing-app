@@ -29,6 +29,8 @@
 
 + Problems 
 
+    + Handle Display name for Google Account 
+
     + When you deleted your recipe in /yourRecipe route, the recipe is not updated immediately
 
 

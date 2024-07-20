@@ -19,14 +19,18 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    displayName: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 )
 
 // static signup method
-userSchema.statics.signup = async function (email, password) {
+userSchema.statics.signup = async function (email, password, displayName) {
   // validation
-  if (!email || !password) {
+  if (!email || !password || !displayName) {
     throw Error("All fields must be filled")
   }
   if (!validator.isEmail(email)) {
@@ -45,6 +49,7 @@ userSchema.statics.signup = async function (email, password) {
   const user = await this.create({
     email,
     password: hash,
+    displayName,
     avt: `https://ui-avatars.com/api/?name=${email}&background=random`,
   })
   return user
