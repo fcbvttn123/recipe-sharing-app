@@ -1,5 +1,5 @@
 // React
-import { Link, Outlet } from "react-router-dom"
+import { Link, Outlet, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 // MUI
@@ -85,6 +85,7 @@ export function Layout(props) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, dispatch } = useAuthContext()
   const [allEmails, setAllEmails] = useState(null)
+  const navigate = useNavigate()
   // MUI
   const { window } = props
   const classes = useStyles()
@@ -151,7 +152,7 @@ export function Layout(props) {
         allEmails.map((e) => (
           <>
             <List>
-              <ListItem button>
+              <ListItem button onClick={handleEmailClick}>
                 <ListItemText primary={e.email} />
               </ListItem>
             </List>
@@ -163,6 +164,22 @@ export function Layout(props) {
   // Functions
   function handleDrawerToggle() {
     setMobileOpen(!mobileOpen)
+  }
+  function handleEmailClick(e) {
+    const email = e.target.textContent
+    async function createChannel(email, token) {
+      let res = await fetch("/api/chat/createMessagingChannel", {
+        method: "POST",
+        body: JSON.stringify({ anotherUserEmail: email }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      let json = await res.json()
+      navigate("/chat")
+    }
+    createChannel(email, user.token)
   }
   useEffect(() => {
     async function getAllEmails(token) {
