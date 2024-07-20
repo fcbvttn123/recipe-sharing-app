@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import {
   Channel,
@@ -8,7 +7,9 @@ import {
   MessageInput,
   MessageList,
   Thread,
+  useChannelStateContext,
   useCreateChatClient,
+  useTranslationContext,
   Window,
 } from "stream-chat-react"
 import { EmojiPicker } from "stream-chat-react/emojis"
@@ -48,5 +49,25 @@ export function ChatPage() {
         <p>Loading...</p>
       )}
     </>
+  )
+}
+
+function YourCustomChannelHeader({ currentUser }) {
+  const { channel } = useChannelStateContext()
+  const { id, image } = channel.data.created_by
+  let title = null
+  let imgPath = null
+  if (currentUser.id == id) {
+  }
+  return (
+    <div className="flex items-center justify-start gap-x-2 p-4 bg-cyan-100">
+      <img
+        className="w-10 h-10 rounded-full"
+        src="https://getstream.io/random_png/?name=react"
+        alt=""
+        srcset=""
+      />
+      <p className="font-bold">Title</p>
+    </div>
   )
 }

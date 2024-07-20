@@ -25,6 +25,7 @@ async function signupUser(req, res) {
       {
         id: user._id,
         image: user.avt,
+        displayName: user.displayName,
       },
     ])
     res
@@ -41,15 +42,13 @@ async function loginUser(req, res) {
     const user = await User.login(email, password)
     const token = createToken(user._id)
     const streamToken = createStreamToken(user._id.toString())
-    res
-      .status(200)
-      .json({
-        id: user._id,
-        email,
-        token,
-        streamToken,
-        displayName: user.displayName,
-      })
+    res.status(200).json({
+      id: user._id,
+      email,
+      token,
+      streamToken,
+      displayName: user.displayName,
+    })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
