@@ -1,6 +1,6 @@
 // React
 import { Link, Outlet } from "react-router-dom"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 // MUI
 import CssBaseline from "@material-ui/core/CssBaseline"
@@ -84,6 +84,7 @@ export function Layout(props) {
   ])
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, dispatch } = useAuthContext()
+  const [allEmails, setAllEmails] = useState(null)
   // MUI
   const { window } = props
   const classes = useStyles()
@@ -140,18 +141,42 @@ export function Layout(props) {
         <>
           <List>
             <ListItem button>
-              <ListItemText primary={user.email} />
+              <ListItemText primary={`Current: ${user.email}`} />
             </ListItem>
           </List>
           <Divider />
         </>
       )}
+      {allEmails &&
+        allEmails.map((e) => (
+          <>
+            <List>
+              <ListItem button>
+                <ListItemText primary={e.email} />
+              </ListItem>
+            </List>
+            <Divider />
+          </>
+        ))}
     </div>
   )
   // Functions
   function handleDrawerToggle() {
     setMobileOpen(!mobileOpen)
   }
+  useEffect(() => {
+    async function getAllEmails(token) {
+      let res = await fetch("/api/auth/getAllEmails", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      let json = await res.json()
+      setAllEmails(json)
+    }
+    user && getAllEmails(user.token)
+  }, [user])
   // UI
   return (
     <div>
