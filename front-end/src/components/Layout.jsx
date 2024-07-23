@@ -142,13 +142,14 @@ export function Layout(props) {
         <>
           <List>
             <ListItem button>
-              <ListItemText primary={`Current: ${user.email}`} />
+              {/* <ListItemText primary={`Current: ${user.email}`} /> */}
+              <ListItemText primary={`${user.displayName}`} />
             </ListItem>
           </List>
           <Divider />
         </>
       )}
-      {allEmails &&
+      {/* {allEmails &&
         allEmails.map((e) => (
           <>
             <List>
@@ -158,7 +159,7 @@ export function Layout(props) {
             </List>
             <Divider />
           </>
-        ))}
+        ))} */}
     </div>
   )
   // Functions

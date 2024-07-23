@@ -29,13 +29,4 @@
 
 + Problems 
 
-    + Handle Display name for Google Account 
-
-    + When you deleted your recipe in /yourRecipe route, the recipe is not updated immediately
-
-
-
-
-+ Test Accounts 
-
-    chatTest@gmail.com - Welcome@20n24
+    + Data is not updated after sign-up
