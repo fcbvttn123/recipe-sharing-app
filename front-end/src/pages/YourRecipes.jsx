@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { RecipeCard } from "../components/RecipeCard"
 import { CircularProgress } from "@material-ui/core"
+import { useRecipeContext } from "../hooks/useRecipeContext"
 
 export function YourRecipes() {
   /* 
@@ -9,6 +10,7 @@ export function YourRecipes() {
   */
   const { user } = useAuthContext()
   const [recipes, setRecipes] = useState(null)
+  const contextObject = useRecipeContext()
 
   /* 
     This code is used to render content conditionally 
@@ -60,7 +62,7 @@ export function YourRecipes() {
       }
     }
     getYourRecipes(user.token)
-  }, [])
+  }, [contextObject.recipes])
 
   return (
     <div className="flex flex-wrap justify-center items-center gap-8">
