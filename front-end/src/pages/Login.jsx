@@ -49,13 +49,15 @@ export function Login() {
     startLogin(formData.email, formData.password)
   }
   async function handleGoogleLogin() {
-    async function startSignup(email, password) {
+    // Define Functions
+    async function startSignup(email, password, displayName) {
       let res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
           password,
+          displayName,
         }),
       })
       let json = await res.json()
@@ -87,7 +89,10 @@ export function Login() {
         console.log(error)
       }
     }
+    // Start google login to get google email
     let googleLoginRes = await signInWithPopup(auth, provider)
+    let googleDisplayName = googleLoginRes.user.displayName
+    // Send google email to server to check if the email already existed
     let apiCall = await fetch("/api/auth/checkIfGoogleAccountExists", {
       method: "POST",
       body: JSON.stringify({ email: googleLoginRes.user.email }),
@@ -96,15 +101,18 @@ export function Login() {
       },
     })
     let json = await apiCall.json()
+    // If the email is not registered, add it to Google_Account table
     if (
       json.message ==
       "this email is added to Google_Account table, start sign-up process for Users table"
     ) {
       let startSignUpRes = await startSignup(
         googleLoginRes.user.email,
-        import.meta.env.VITE__GOOGLE_ACCOUNT_PASSWORD
+        import.meta.env.VITE__GOOGLE_ACCOUNT_PASSWORD,
+        googleDisplayName
       )
       navigate("/")
+      // If the email is already registered before, start login
     } else if (
       json.message ==
       "this google account is already registered before, start login"
@@ -113,6 +121,7 @@ export function Login() {
         googleLoginRes.user.email,
         import.meta.env.VITE__GOOGLE_ACCOUNT_PASSWORD
       )
+      // If the email is already registered, display error
     } else if (json.message == "Email already in use!") {
       setError("Email already in use, please enter your password!")
     }
