@@ -8,12 +8,14 @@ import {
   MessageList,
   Thread,
   useChannelStateContext,
+  useChatContext,
   useCreateChatClient,
   useTranslationContext,
   Window,
 } from "stream-chat-react"
 import { EmojiPicker } from "stream-chat-react/emojis"
 import "stream-chat-react/dist/css/index.css"
+import { useEffect } from "react"
 
 export function ChatPage() {
   const { user } = useAuthContext()
@@ -61,12 +63,6 @@ function YourCustomChannelHeader({ currentUser }) {
   }
   return (
     <div className="flex items-center justify-start gap-x-2 p-4 bg-cyan-100">
-      <img
-        className="w-10 h-10 rounded-full"
-        src="https://getstream.io/random_png/?name=react"
-        alt=""
-        srcset=""
-      />
       <p className="font-bold">Title</p>
     </div>
   )
