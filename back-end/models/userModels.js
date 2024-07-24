@@ -50,7 +50,7 @@ userSchema.statics.signup = async function (email, password, displayName) {
     email,
     password: hash,
     displayName,
-    avt: `https://ui-avatars.com/api/?name=${email}&background=random`,
+    avt: `https://ui-avatars.com/api/?name=${displayName}&background=random`,
   })
   return user
 }
