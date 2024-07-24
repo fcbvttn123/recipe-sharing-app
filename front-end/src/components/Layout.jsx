@@ -149,7 +149,7 @@ export function Layout(props) {
           <Divider />
         </>
       )}
-      {/* {allEmails &&
+      {allEmails &&
         allEmails.map((e) => (
           <>
             <List>
@@ -159,7 +159,7 @@ export function Layout(props) {
             </List>
             <Divider />
           </>
-        ))} */}
+        ))}
     </div>
   )
   // Functions

@@ -7,11 +7,12 @@ const User = require("../models/userModels")
 
 async function createMessagingChannel(req, res) {
   const { anotherUserEmail } = req.body
-  let userIdSendingRequest = req.user._id.toString()
-  let anotherUser = await User.findOne({
-    email: anotherUserEmail,
-  })
   try {
+    let userIdSendingRequest = req.user._id.toString()
+    let userSendingRequest = await User.findById(userIdSendingRequest)
+    let anotherUser = await User.findOne({
+      email: anotherUserEmail,
+    })
     const channelId = `channel-${userIdSendingRequest}-${anotherUser._id.toString()}`
     const channel = serverClient.channel("messaging", channelId, {
       created_by_id: userIdSendingRequest,
@@ -19,7 +20,7 @@ async function createMessagingChannel(req, res) {
     })
     await channel.create()
     await channel.update({
-      name: anotherUserEmail,
+      name: `Chat with ${userSendingRequest.displayName} and ${anotherUser.displayName}`,
       image: "https://getstream.io/random_png/?name=react",
       anotherMember: anotherUser.displayName,
     })
