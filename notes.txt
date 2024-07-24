@@ -30,3 +30,7 @@
 + Problems 
 
     + Data is not updated after Logout
+
+    + Redirect user after sign-up
+
+    + When user clicks a user to start chat, the chat page does not open the chat box of that person right away

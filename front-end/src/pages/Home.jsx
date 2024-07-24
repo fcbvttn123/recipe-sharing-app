@@ -23,6 +23,7 @@ export function Home() {
             />
           </Link>
         ))}
+      {recipes?.length == 0 && <p className="mt-10">No recipes yet</p>}
     </div>
   )
 }

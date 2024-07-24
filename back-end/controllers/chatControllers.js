@@ -21,7 +21,7 @@ async function createMessagingChannel(req, res) {
     await channel.create()
     await channel.update({
       name: `Chat with ${userSendingRequest.displayName} and ${anotherUser.displayName}`,
-      image: "https://getstream.io/random_png/?name=react",
+      image: `https://ui-avatars.com/api/?name=${userSendingRequest.displayName[0] + anotherUser.displayName[0]}&background=random`,
       anotherMember: anotherUser.displayName,
     })
     res.status(200).json({ message: "Channel created!", channelId })

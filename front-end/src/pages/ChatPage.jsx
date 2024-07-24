@@ -8,14 +8,11 @@ import {
   MessageList,
   Thread,
   useChannelStateContext,
-  useChatContext,
   useCreateChatClient,
-  useTranslationContext,
   Window,
 } from "stream-chat-react"
 import { EmojiPicker } from "stream-chat-react/emojis"
 import "stream-chat-react/dist/css/index.css"
-import { useEffect } from "react"
 
 export function ChatPage() {
   const { user } = useAuthContext()

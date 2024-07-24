@@ -149,17 +149,17 @@ export function Layout(props) {
           <Divider />
         </>
       )}
-      {allEmails &&
+      {/* {allEmails &&
         allEmails.map((e) => (
           <>
             <List>
               <ListItem button onClick={handleEmailClick}>
-                <ListItemText primary={e.email} />
+                <ListItemText primary={e?.email} />
               </ListItem>
             </List>
             <Divider />
           </>
-        ))}
+        ))} */}
     </div>
   )
   // Functions
