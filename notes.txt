@@ -37,6 +37,8 @@
     
     + Data is not updated after Logout
 
+    + Some pages don't have cards being centered
+
     + When user clicks a user to start chat, the chat page does not open the chat box of that person right away
     
     + Add user search to Channel List component
