@@ -34,7 +34,12 @@ export function ChatPage() {
     <>
       {client ? (
         <Chat client={client}>
-          <ChannelList filters={filters} sort={sort} options={options} />
+          <ChannelList
+            List={CustomListContainer}
+            filters={filters}
+            sort={sort}
+            options={options}
+          />
           <Channel EmojiPicker={EmojiPicker}>
             <Window>
               <ChannelHeader />
@@ -51,16 +56,6 @@ export function ChatPage() {
   )
 }
 
-function YourCustomChannelHeader({ currentUser }) {
-  const { channel } = useChannelStateContext()
-  const { id, image } = channel.data.created_by
-  let title = null
-  let imgPath = null
-  if (currentUser.id == id) {
-  }
-  return (
-    <div className="flex items-center justify-start gap-x-2 p-4 bg-cyan-100">
-      <p className="font-bold">Title</p>
-    </div>
-  )
+function CustomListContainer(props) {
+  // render custom list container here
 }
