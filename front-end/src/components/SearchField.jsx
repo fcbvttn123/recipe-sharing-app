@@ -67,6 +67,22 @@ export function SearchField({ placeholder }) {
       setFilteredEmails(filteredArray)
     }
   }
+  function handleEmailClick(e) {
+    const email = e.target.textContent
+    async function createChannel(email, token) {
+      let res = await fetch("/api/chat/createMessagingChannel", {
+        method: "POST",
+        body: JSON.stringify({ anotherUserEmail: email }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      let json = await res.json()
+    }
+    createChannel(email, user.token)
+    setFilteredEmails([])
+  }
   useEffect(() => {
     async function getAllEmails(token) {
       let res = await fetch("/api/auth/getAllEmails", {
@@ -103,8 +119,8 @@ export function SearchField({ placeholder }) {
           className="top-full bg-gray-400 w-full z-10"
         >
           {filteredEmails?.length > 0 &&
-            filteredEmails.map((e) => (
-              <ListItem button>
+            filteredEmails.map((e, i) => (
+              <ListItem key={i} button onClick={handleEmailClick}>
                 <ListItemText primary={e.email} />
               </ListItem>
             ))}
