@@ -1,5 +1,14 @@
-import { alpha, InputBase, makeStyles } from "@material-ui/core"
+import {
+  alpha,
+  InputBase,
+  List,
+  ListItem,
+  ListItemText,
+  makeStyles,
+} from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/Search"
+import { useAuthContext } from "../hooks/useAuthContext"
+import { useEffect, useState } from "react"
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -11,10 +20,6 @@ const useStyles = makeStyles((theme) => ({
     },
     marginLeft: 0,
     width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -44,19 +49,67 @@ const useStyles = makeStyles((theme) => ({
 
 export function SearchField({ placeholder }) {
   const classes = useStyles()
+  const { user } = useAuthContext()
+  const [allEmails, setAllEmails] = useState(null)
+  const [filteredEmails, setFilteredEmails] = useState([])
+  function handleChange(e) {
+    let inputValue = e.target.value
+    if (inputValue == "") {
+      setFilteredEmails([])
+      return
+    }
+    if (allEmails?.length > 0) {
+      let filteredArray = allEmails.filter((e) => {
+        if (e.email.includes(inputValue)) {
+          return e.email
+        }
+      })
+      setFilteredEmails(filteredArray)
+    }
+  }
+  useEffect(() => {
+    async function getAllEmails(token) {
+      let res = await fetch("/api/auth/getAllEmails", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      let json = await res.json()
+      setAllEmails(json)
+    }
+    user && getAllEmails(user.token)
+  }, [user])
   return (
-    <div className={classes.search}>
-      <div className={classes.searchIcon}>
-        <SearchIcon />
+    <div className="relative">
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase
+          placeholder={placeholder}
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+          inputProps={{ "aria-label": "search" }}
+          onChange={handleChange}
+        />
       </div>
-      <InputBase
-        placeholder={placeholder}
-        classes={{
-          root: classes.inputRoot,
-          input: classes.inputInput,
-        }}
-        inputProps={{ "aria-label": "search" }}
-      />
+      {filteredEmails.length > 0 && (
+        <List
+          component="nav"
+          style={{ position: "absolute" }}
+          className="top-full bg-gray-400 w-full z-10"
+        >
+          {filteredEmails?.length > 0 &&
+            filteredEmails.map((e) => (
+              <ListItem button>
+                <ListItemText primary={e.email} />
+              </ListItem>
+            ))}
+        </List>
+      )}
     </div>
   )
 }
