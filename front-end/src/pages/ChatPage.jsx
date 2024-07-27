@@ -66,43 +66,20 @@ export function ChatPage() {
   )
 }
 
-function CustomListContainer({ loadedChannels }) {
-  const { setActiveChannel } = useChatContext()
-  console.log(loadedChannels)
+function CustomListContainer({ children }) {
   return (
-    <div className="w-72 flex flex-col gap-4 m-3 h-full">
-      <List component="nav" aria-label="main mailbox folders">
-        <Link to=".." relative="path">
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            className="w-full mb-4"
-          >
-            Back
-          </Button>
-        </Link>
-        {loadedChannels &&
-          loadedChannels.length > 0 &&
-          loadedChannels.map((e) => (
-            <>
-              <Divider />
-              <CustomListItem
-                text={e.data.name}
-                onClick={() => setActiveChannel(e)}
-              />
-              <Divider />
-            </>
-          ))}
-      </List>
+    <div className="w-72 flex flex-col gap-4 m-3 h-full relative">
+      {children}
+      <Link to=".." relative="path" className="absolute bottom-2 w-full">
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          className="w-full mb-4"
+        >
+          Back
+        </Button>
+      </Link>
     </div>
-  )
-}
-
-function CustomListItem({ text, onClick }) {
-  return (
-    <ListItem button onClick={onClick}>
-      <ListItemText primary={text} />
-    </ListItem>
   )
 }
