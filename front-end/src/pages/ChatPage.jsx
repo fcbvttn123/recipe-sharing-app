@@ -14,14 +14,9 @@ import {
 } from "stream-chat-react"
 import { EmojiPicker } from "stream-chat-react/emojis"
 import "stream-chat-react/dist/css/index.css"
-import {
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-} from "@material-ui/core"
+import { Button } from "@material-ui/core"
 import { Link } from "react-router-dom"
+import { SearchField } from "../components/SearchField"
 
 export function ChatPage() {
   const { user } = useAuthContext()
@@ -69,6 +64,7 @@ export function ChatPage() {
 function CustomListContainer({ children }) {
   return (
     <div className="w-72 flex flex-col gap-4 m-3 h-full relative">
+      <SearchField placeholder="Email..." />
       {children}
       <Link to=".." relative="path" className="absolute bottom-2 w-full">
         <Button
