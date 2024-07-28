@@ -29,10 +29,6 @@
 
 + Problems 
 
-    + Add back button to chat page
-
-    + Add search bar to chat page 
-
     + Add search bar to search for recipes 
     
     + Data is not updated after Logout
@@ -42,3 +38,14 @@
     + When user clicks a user to start chat, the chat page does not open the chat box of that person right away
     
     + Add user search to Channel List component
+
+
+
+
++ Next 
+
+    + Add remove channel feature
+
+    + Continue to custom the Channel Header 
+
+    + Move Search Login function into a separate component 
