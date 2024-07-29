@@ -17,6 +17,8 @@ import "stream-chat-react/dist/css/index.css"
 import { Button } from "@material-ui/core"
 import { Link } from "react-router-dom"
 import { SearchField } from "../components/SearchField"
+import clsx from "clsx"
+import { useRef } from "react"
 
 export function ChatPage() {
   const { user } = useAuthContext()
@@ -40,6 +42,7 @@ export function ChatPage() {
         <Chat client={client}>
           <ChannelList
             List={CustomListContainer}
+            Preview={CustomListItem}
             sendChannelsToList
             filters={filters}
             sort={sort}
@@ -80,7 +83,7 @@ function CustomListContainer({ children }) {
   )
 }
 
-function CustomChannelHeader({ currentUserId }) {
+function CustomChannelHeader({ currentUserId, live }) {
   const { channel } = useChannelStateContext()
   console.log(channel)
   let userIdCreatingChannel = channel.data.created_by.id
@@ -108,5 +111,69 @@ function CustomChannelHeader({ currentUserId }) {
         <p>{channelTitle}</p>
       </div>
     </div>
+  )
+}
+
+function CustomListItem({
+  active,
+  unread,
+  displayImage,
+  displayTitle,
+  latestMessage,
+  onSelect: customOnSelectChannel,
+  setActiveChannel,
+  channel,
+  watchers,
+}) {
+  const channelPreviewButton = useRef(null)
+  function onSelectChannel() {
+    if (customOnSelectChannel) {
+      customOnSelectChannel(e)
+    } else if (setActiveChannel) {
+      setActiveChannel(channel, watchers)
+    }
+    if (channelPreviewButton?.current) {
+      channelPreviewButton.current.blur()
+    }
+  }
+  return (
+    <button
+      className={clsx(
+        `str-chat__channel-preview-messenger str-chat__channel-preview`,
+        active && "str-chat__channel-preview-messenger--active",
+        unread && unread >= 1 && "str-chat__channel-preview-messenger--unread"
+      )}
+      data-testid="channel-preview-button"
+      onClick={onSelectChannel}
+      ref={channelPreviewButton}
+      role="option"
+    >
+      <div className="str-chat__channel-preview-messenger--left">
+        <img
+          className="w-10 h-10 rounded-lg"
+          src={displayImage}
+          alt=""
+          srcset=""
+        />
+      </div>
+      <div className="str-chat__channel-preview-end">
+        <div className="str-chat__channel-preview-end-first-row">
+          <div className="str-chat__channel-preview-messenger--name">
+            <span>{displayTitle}</span>
+          </div>
+          {!!unread && (
+            <div
+              className="str-chat__channel-preview-unread-badge"
+              data-testid="unread-badge"
+            >
+              {unread}
+            </div>
+          )}
+        </div>
+        <div className="str-chat__channel-preview-messenger--last-message">
+          {latestMessage}
+        </div>
+      </div>
+    </button>
   )
 }

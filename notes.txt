@@ -46,6 +46,4 @@
 
     + Add remove channel feature
 
-    + Continue to custom the Channel Header 
-
     + Move Search Login function into a separate component 
