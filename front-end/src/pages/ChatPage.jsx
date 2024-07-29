@@ -118,15 +118,26 @@ function CustomChannelHeader({ currentUserId, live }) {
 function CustomListItem({
   active,
   unread,
-  displayImage,
-  displayTitle,
   latestMessage,
   onSelect: customOnSelectChannel,
   setActiveChannel,
   channel,
   watchers,
 }) {
+  const { user } = useAuthContext()
   const channelPreviewButton = useRef(null)
+  let channelTitle = null
+  let channelImage = null
+  if (user) {
+    channelTitle =
+      user.id == channel.data.created_by.id
+        ? channel.data.anotherMember
+        : channel.data.channelCreator
+    channelImage =
+      user.id == channel.data.created_by.id
+        ? channel.data.anotherMemberAvt
+        : channel.data.channelCreatorAvt
+  }
   function onSelectChannel() {
     if (customOnSelectChannel) {
       customOnSelectChannel(e)
@@ -143,46 +154,46 @@ function CustomListItem({
     await channel.delete()
   }
   return (
-    <>
-      <button
-        className={clsx(
-          `str-chat__channel-preview-messenger str-chat__channel-preview`,
-          active && "str-chat__channel-preview-messenger--active",
-          unread && unread >= 1 && "str-chat__channel-preview-messenger--unread"
-        )}
-        data-testid="channel-preview-button"
-        onClick={onSelectChannel}
-        ref={channelPreviewButton}
-        role="option"
-      >
-        <div className="str-chat__channel-preview-messenger--left">
+    <button
+      className={clsx(
+        `str-chat__channel-preview-messenger str-chat__channel-preview`,
+        active && "str-chat__channel-preview-messenger--active",
+        unread && unread >= 1 && "str-chat__channel-preview-messenger--unread"
+      )}
+      data-testid="channel-preview-button"
+      onClick={onSelectChannel}
+      ref={channelPreviewButton}
+      role="option"
+    >
+      <div className="str-chat__channel-preview-messenger--left">
+        {channelImage && (
           <img
             className="w-10 h-10 rounded-lg"
-            src={displayImage}
+            src={channelImage}
             alt=""
             srcset=""
           />
-        </div>
-        <div className="str-chat__channel-preview-end">
-          <div className="str-chat__channel-preview-end-first-row">
-            <div className="str-chat__channel-preview-messenger--name">
-              <span>{displayTitle}</span>
+        )}
+      </div>
+      <div className="str-chat__channel-preview-end">
+        <div className="str-chat__channel-preview-end-first-row">
+          <div className="str-chat__channel-preview-messenger--name">
+            {channelTitle && <span>{channelTitle}</span>}
+          </div>
+          {!!unread && (
+            <div
+              className="str-chat__channel-preview-unread-badge"
+              data-testid="unread-badge"
+            >
+              {unread}
             </div>
-            {!!unread && (
-              <div
-                className="str-chat__channel-preview-unread-badge"
-                data-testid="unread-badge"
-              >
-                {unread}
-              </div>
-            )}
-          </div>
-          <div className="str-chat__channel-preview-messenger--last-message">
-            {latestMessage}
-          </div>
-          <DeleteIcon onClick={deleteChannel} />
+          )}
         </div>
-      </button>
-    </>
+        <div className="str-chat__channel-preview-messenger--last-message">
+          {latestMessage}
+        </div>
+        <DeleteIcon onClick={deleteChannel} />
+      </div>
+    </button>
   )
 }
