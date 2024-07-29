@@ -46,4 +46,6 @@
 
     + Add remove channel feature
 
+    + Give permission to delete channel to both members
+
     + Move Search Login function into a separate component 

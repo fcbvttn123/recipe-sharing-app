@@ -14,7 +14,8 @@ import {
 } from "stream-chat-react"
 import { EmojiPicker } from "stream-chat-react/emojis"
 import "stream-chat-react/dist/css/index.css"
-import { Button } from "@material-ui/core"
+import { Button, Menu, MenuItem } from "@material-ui/core"
+import DeleteIcon from "@material-ui/icons/Delete"
 import { Link } from "react-router-dom"
 import { SearchField } from "../components/SearchField"
 import clsx from "clsx"
@@ -136,44 +137,52 @@ function CustomListItem({
       channelPreviewButton.current.blur()
     }
   }
+  async function deleteChannel(e) {
+    e.stopPropagation()
+    e.preventDefault()
+    await channel.delete()
+  }
   return (
-    <button
-      className={clsx(
-        `str-chat__channel-preview-messenger str-chat__channel-preview`,
-        active && "str-chat__channel-preview-messenger--active",
-        unread && unread >= 1 && "str-chat__channel-preview-messenger--unread"
-      )}
-      data-testid="channel-preview-button"
-      onClick={onSelectChannel}
-      ref={channelPreviewButton}
-      role="option"
-    >
-      <div className="str-chat__channel-preview-messenger--left">
-        <img
-          className="w-10 h-10 rounded-lg"
-          src={displayImage}
-          alt=""
-          srcset=""
-        />
-      </div>
-      <div className="str-chat__channel-preview-end">
-        <div className="str-chat__channel-preview-end-first-row">
-          <div className="str-chat__channel-preview-messenger--name">
-            <span>{displayTitle}</span>
-          </div>
-          {!!unread && (
-            <div
-              className="str-chat__channel-preview-unread-badge"
-              data-testid="unread-badge"
-            >
-              {unread}
+    <>
+      <button
+        className={clsx(
+          `str-chat__channel-preview-messenger str-chat__channel-preview`,
+          active && "str-chat__channel-preview-messenger--active",
+          unread && unread >= 1 && "str-chat__channel-preview-messenger--unread"
+        )}
+        data-testid="channel-preview-button"
+        onClick={onSelectChannel}
+        ref={channelPreviewButton}
+        role="option"
+      >
+        <div className="str-chat__channel-preview-messenger--left">
+          <img
+            className="w-10 h-10 rounded-lg"
+            src={displayImage}
+            alt=""
+            srcset=""
+          />
+        </div>
+        <div className="str-chat__channel-preview-end">
+          <div className="str-chat__channel-preview-end-first-row">
+            <div className="str-chat__channel-preview-messenger--name">
+              <span>{displayTitle}</span>
             </div>
-          )}
+            {!!unread && (
+              <div
+                className="str-chat__channel-preview-unread-badge"
+                data-testid="unread-badge"
+              >
+                {unread}
+              </div>
+            )}
+          </div>
+          <div className="str-chat__channel-preview-messenger--last-message">
+            {latestMessage}
+          </div>
+          <DeleteIcon onClick={deleteChannel} />
         </div>
-        <div className="str-chat__channel-preview-messenger--last-message">
-          {latestMessage}
-        </div>
-      </div>
-    </button>
+      </button>
+    </>
   )
 }
