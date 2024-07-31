@@ -84,7 +84,6 @@ export function Layout(props) {
   ])
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, dispatch } = useAuthContext()
-  const [allEmails, setAllEmails] = useState(null)
   const navigate = useNavigate()
   // MUI
   const { window } = props
@@ -142,45 +141,17 @@ export function Layout(props) {
         <>
           <List>
             <ListItem button>
-              {/* <ListItemText primary={`Current: ${user.email}`} /> */}
               <ListItemText primary={`${user.displayName}`} />
             </ListItem>
           </List>
           <Divider />
         </>
       )}
-      {/* {allEmails &&
-        allEmails.map((e) => (
-          <>
-            <List>
-              <ListItem button onClick={handleEmailClick}>
-                <ListItemText primary={e?.email} />
-              </ListItem>
-            </List>
-            <Divider />
-          </>
-        ))} */}
     </div>
   )
   // Functions
   function handleDrawerToggle() {
     setMobileOpen(!mobileOpen)
-  }
-  function handleEmailClick(e) {
-    const email = e.target.textContent
-    async function createChannel(email, token) {
-      let res = await fetch("/api/chat/createMessagingChannel", {
-        method: "POST",
-        body: JSON.stringify({ anotherUserEmail: email }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      let json = await res.json()
-      navigate("/chat")
-    }
-    createChannel(email, user.token)
   }
   useEffect(() => {
     async function getAllEmails(token) {
