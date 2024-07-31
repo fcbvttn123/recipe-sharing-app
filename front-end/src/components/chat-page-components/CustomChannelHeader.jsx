@@ -1,4 +1,5 @@
 import { useChannelStateContext, useChatContext } from "stream-chat-react"
+import MenuIcon from "@material-ui/icons/Menu"
 
 export function CustomChannelHeader({ currentUserId }) {
   const { channel } = useChannelStateContext()
@@ -15,7 +16,7 @@ export function CustomChannelHeader({ currentUserId }) {
   return (
     <div className="flex items-center justify-start gap-x-3 bg-white border-b-2 border-gray-300 px-6 py-2 rounded-tl-md rounded-tr-md">
       <button className="str-chat__header-hamburger" onClick={openMobileNav}>
-        click
+        <MenuIcon />
       </button>
       <img
         className="w-10 h-10 rounded-lg"
