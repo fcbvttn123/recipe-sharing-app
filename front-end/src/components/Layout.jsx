@@ -160,11 +160,6 @@ export function Layout(props) {
     recipes.forEach((e) => {
       allRecipeTitles.push(e.title)
     })
-  function filterLogic(e, inputValue) {
-    if (e.toLowerCase().includes(inputValue.toLowerCase())) {
-      return e
-    }
-  }
   // UI
   return (
     <div>
@@ -185,10 +180,9 @@ export function Layout(props) {
             Recipe Sharing App
           </Typography>
           <SearchField
-            placeholder="Enter a recipe name..."
+            placeholder="Recipe name..."
             data={allRecipeTitles.length > 0 && allRecipeTitles}
             // handleClick={handleSearchClick}
-            filterLogic={filterLogic}
           />
         </Toolbar>
       </AppBar>

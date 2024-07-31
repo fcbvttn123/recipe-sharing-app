@@ -57,7 +57,7 @@ async function loginUser(req, res) {
 async function getAllEmails(req, res) {
   try {
     let apiResponse = await User.find({}, { email: 1, _id: 0 })
-    res.status(200).json(apiResponse)
+    res.status(200).json(apiResponse.map((e) => e.email))
   } catch (err) {
     res.status(404).json({ error: err })
   }

@@ -23,11 +23,6 @@ export function CustomListContainer({ children }) {
     }
     createChannel(email, user.token)
   }
-  function filterLogic(e, inputValue) {
-    if (e.email.includes(inputValue)) {
-      return e.email
-    }
-  }
   useEffect(() => {
     async function getAllEmails(token) {
       let res = await fetch("/api/auth/getAllEmails", {
@@ -47,7 +42,6 @@ export function CustomListContainer({ children }) {
         placeholder="Email..."
         data={allEmails}
         handleClick={handleSearchClick}
-        filterLogic={filterLogic}
       />
       {children}
       <Link to=".." relative="path" className="absolute bottom-2 w-full">

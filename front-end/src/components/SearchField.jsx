@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function SearchField({ placeholder, data, handleClick, filterLogic }) {
+export function SearchField({ placeholder, data, handleClick }) {
   const classes = useStyles()
   const [filteredData, setFilteredData] = useState([])
   function handleChange(e) {
@@ -56,7 +56,9 @@ export function SearchField({ placeholder, data, handleClick, filterLogic }) {
       return
     }
     if (data?.length > 0) {
-      let filteredArray = data.filter((e) => filterLogic(e, inputValue))
+      let filteredArray = data.filter((e) =>
+        e.toLowerCase().includes(inputValue.toLowerCase())
+      )
       setFilteredData(filteredArray)
     }
   }
