@@ -28,6 +28,7 @@ import AssignmentIndIcon from "@material-ui/icons/AssignmentInd"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { AUTH_ACTIONS } from "../main"
 import ChatIcon from "@material-ui/icons/Chat"
+import { SearchField } from "./SearchField"
 
 const drawerWidth = 240
 const useStyles = makeStyles((theme) => ({
@@ -172,7 +173,7 @@ export function Layout(props) {
       <CssBaseline />
       {/* App Bar */}
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar className="flex items-center justify-start sm:justify-between">
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -182,9 +183,15 @@ export function Layout(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" noWrap className="hidden sm:block">
             Recipe Sharing App
           </Typography>
+          <SearchField
+            placeholder="Email..."
+            // data={allEmails}
+            // handleClick={handleSearchClick}
+            // filterLogic={filterLogic}
+          />
         </Toolbar>
       </AppBar>
       {/* Nav */}

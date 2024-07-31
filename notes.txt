@@ -29,8 +29,6 @@
 
 + Problems 
 
-    + Add search bar to search for recipes 
-    
     + Data is not updated after Logout
 
     + Some pages don't have cards being centered
@@ -44,6 +42,8 @@
 
 + Next 
 
+    + Add search bar to search for recipes 
+
     + Give permission to delete channel to both members
 
-    + Move Search Login function into a separate component 
+    + Add comment section to each card
