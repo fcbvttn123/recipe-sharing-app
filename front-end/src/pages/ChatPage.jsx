@@ -1,5 +1,6 @@
 import { useAuthContext } from "../hooks/useAuthContext"
 import {
+  Avatar,
   Channel,
   ChannelHeader,
   ChannelList,
@@ -86,7 +87,6 @@ function CustomListContainer({ children }) {
 
 function CustomChannelHeader({ currentUserId, live }) {
   const { channel } = useChannelStateContext()
-  console.log(channel)
   let userIdCreatingChannel = channel.data.created_by.id
   let channelTitle =
     currentUserId == userIdCreatingChannel
@@ -155,11 +155,11 @@ function CustomListItem({
   }
   return (
     <button
-      className={clsx(
+      className={`${clsx(
         `str-chat__channel-preview-messenger str-chat__channel-preview`,
         active && "str-chat__channel-preview-messenger--active",
         unread && unread >= 1 && "str-chat__channel-preview-messenger--unread"
-      )}
+      )} relative`}
       data-testid="channel-preview-button"
       onClick={onSelectChannel}
       ref={channelPreviewButton}
@@ -167,11 +167,9 @@ function CustomListItem({
     >
       <div className="str-chat__channel-preview-messenger--left">
         {channelImage && (
-          <img
-            className="w-10 h-10 rounded-lg"
-            src={channelImage}
-            alt=""
-            srcset=""
+          <Avatar
+            className="str-chat__avatar--channel-preview"
+            image={channelImage}
           />
         )}
       </div>
@@ -180,19 +178,14 @@ function CustomListItem({
           <div className="str-chat__channel-preview-messenger--name">
             {channelTitle && <span>{channelTitle}</span>}
           </div>
-          {!!unread && (
-            <div
-              className="str-chat__channel-preview-unread-badge"
-              data-testid="unread-badge"
-            >
-              {unread}
-            </div>
-          )}
         </div>
         <div className="str-chat__channel-preview-messenger--last-message">
           {latestMessage}
         </div>
-        <DeleteIcon onClick={deleteChannel} />
+        <DeleteIcon
+          onClick={deleteChannel}
+          className="absolute right-3 top-3"
+        />
       </div>
     </button>
   )
