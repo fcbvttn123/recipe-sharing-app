@@ -7,8 +7,7 @@ import {
   makeStyles,
 } from "@material-ui/core"
 import SearchIcon from "@material-ui/icons/Search"
-import { useAuthContext } from "../hooks/useAuthContext"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -47,55 +46,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export function SearchField({ placeholder }) {
+export function SearchField({ placeholder, data, handleClick, filterLogic }) {
   const classes = useStyles()
-  const { user } = useAuthContext()
-  const [allEmails, setAllEmails] = useState(null)
-  const [filteredEmails, setFilteredEmails] = useState([])
+  const [filteredData, setFilteredData] = useState([])
   function handleChange(e) {
     let inputValue = e.target.value
     if (inputValue == "") {
-      setFilteredEmails([])
+      setFilteredData([])
       return
     }
-    if (allEmails?.length > 0) {
-      let filteredArray = allEmails.filter((e) => {
-        if (e.email.includes(inputValue)) {
-          return e.email
-        }
-      })
-      setFilteredEmails(filteredArray)
+    if (data?.length > 0) {
+      let filteredArray = data.filter((e) => filterLogic(e, inputValue))
+      setFilteredData(filteredArray)
     }
   }
-  function handleEmailClick(e) {
-    const email = e.target.textContent
-    async function createChannel(email, token) {
-      let res = await fetch("/api/chat/createMessagingChannel", {
-        method: "POST",
-        body: JSON.stringify({ anotherUserEmail: email }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      let json = await res.json()
-    }
-    createChannel(email, user.token)
-    setFilteredEmails([])
-  }
-  useEffect(() => {
-    async function getAllEmails(token) {
-      let res = await fetch("/api/auth/getAllEmails", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      let json = await res.json()
-      setAllEmails(json)
-    }
-    user && getAllEmails(user.token)
-  }, [user])
   return (
     <div className="relative">
       <div className={classes.search}>
@@ -112,15 +76,22 @@ export function SearchField({ placeholder }) {
           onChange={handleChange}
         />
       </div>
-      {filteredEmails.length > 0 && (
+      {filteredData.length > 0 && (
         <List
           component="nav"
           style={{ position: "absolute" }}
           className="top-full bg-gray-400 w-full z-10"
         >
-          {filteredEmails?.length > 0 &&
-            filteredEmails.map((e, i) => (
-              <ListItem key={i} button onClick={handleEmailClick}>
+          {filteredData?.length > 0 &&
+            filteredData.map((e, i) => (
+              <ListItem
+                key={i}
+                button
+                onClick={(e) => {
+                  handleClick(e)
+                  setFilteredData([])
+                }}
+              >
                 <ListItemText primary={e.email} />
               </ListItem>
             ))}
