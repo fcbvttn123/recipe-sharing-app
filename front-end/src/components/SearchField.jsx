@@ -89,12 +89,12 @@ export function SearchField({ placeholder, data, handleClick }) {
               <ListItem
                 key={i}
                 button
-                onClick={(e) => {
-                  handleClick(e)
+                onClick={(event) => {
+                  handleClick(e, filteredData)
                   setFilteredData([])
                 }}
               >
-                <ListItemText primary={e.email || e} />
+                <ListItemText primary={e} />
               </ListItem>
             ))}
         </List>

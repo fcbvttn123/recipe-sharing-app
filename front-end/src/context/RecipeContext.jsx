@@ -29,6 +29,10 @@ export function recipeReducer(state, action) {
           }
         }),
       }
+    case RECIPE_ACTIONS.GET_FILTERED_RECIPES:
+      return {
+        filteredRecipes: action.payload,
+      }
     default:
       return state
   }
@@ -37,6 +41,7 @@ export function recipeReducer(state, action) {
 export function RecipeContextProvider({ children }) {
   const [state, dispatch] = useReducer(recipeReducer, {
     recipes: null,
+    filteredRecipes: null,
   })
   useEffect(() => {
     async function getRecipes() {

@@ -26,7 +26,7 @@ import CreateIcon from "@material-ui/icons/Create"
 import { useAuthContext } from "../hooks/useAuthContext"
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
-import { AUTH_ACTIONS } from "../main"
+import { AUTH_ACTIONS, RECIPE_ACTIONS } from "../main"
 import ChatIcon from "@material-ui/icons/Chat"
 import { SearchField } from "./SearchField"
 import { useRecipeContext } from "../hooks/useRecipeContext"
@@ -86,7 +86,7 @@ export function Layout(props) {
   ])
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, dispatch } = useAuthContext()
-  const { recipes } = useRecipeContext()
+  const { recipes, dispatch: recipeDispatch } = useRecipeContext()
   // MUI
   const { window } = props
   const classes = useStyles()
@@ -182,7 +182,12 @@ export function Layout(props) {
           <SearchField
             placeholder="Recipe name..."
             data={allRecipeTitles.length > 0 && allRecipeTitles}
-            // handleClick={handleSearchClick}
+            handleClick={(e, filteredData) =>
+              recipeDispatch({
+                type: RECIPE_ACTIONS.GET_FILTERED_RECIPES,
+                payload: filteredData,
+              })
+            }
           />
         </Toolbar>
       </AppBar>
