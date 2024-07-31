@@ -92,7 +92,7 @@ export function SearchField({ placeholder, data, handleClick, filterLogic }) {
                   setFilteredData([])
                 }}
               >
-                <ListItemText primary={e.email} />
+                <ListItemText primary={e.email || e} />
               </ListItem>
             ))}
         </List>

@@ -1,5 +1,5 @@
 // React
-import { Link, Outlet, useNavigate } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 // MUI
@@ -29,6 +29,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { AUTH_ACTIONS } from "../main"
 import ChatIcon from "@material-ui/icons/Chat"
 import { SearchField } from "./SearchField"
+import { useRecipeContext } from "../hooks/useRecipeContext"
 
 const drawerWidth = 240
 const useStyles = makeStyles((theme) => ({
@@ -85,7 +86,7 @@ export function Layout(props) {
   ])
   const [mobileOpen, setMobileOpen] = useState(false)
   const { user, dispatch } = useAuthContext()
-  const navigate = useNavigate()
+  const { recipes } = useRecipeContext()
   // MUI
   const { window } = props
   const classes = useStyles()
@@ -154,19 +155,16 @@ export function Layout(props) {
   function handleDrawerToggle() {
     setMobileOpen(!mobileOpen)
   }
-  useEffect(() => {
-    async function getAllEmails(token) {
-      let res = await fetch("/api/auth/getAllEmails", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      let json = await res.json()
-      setAllEmails(json)
+  let allRecipeTitles = []
+  recipes &&
+    recipes.forEach((e) => {
+      allRecipeTitles.push(e.title)
+    })
+  function filterLogic(e, inputValue) {
+    if (e.toLowerCase().includes(inputValue.toLowerCase())) {
+      return e
     }
-    user && getAllEmails(user.token)
-  }, [user])
+  }
   // UI
   return (
     <div>
@@ -187,10 +185,10 @@ export function Layout(props) {
             Recipe Sharing App
           </Typography>
           <SearchField
-            placeholder="Email..."
-            // data={allEmails}
+            placeholder="Enter a recipe name..."
+            data={allRecipeTitles.length > 0 && allRecipeTitles}
             // handleClick={handleSearchClick}
-            // filterLogic={filterLogic}
+            filterLogic={filterLogic}
           />
         </Toolbar>
       </AppBar>
