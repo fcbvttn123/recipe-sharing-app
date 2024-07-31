@@ -2,7 +2,6 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import {
   Avatar,
   Channel,
-  ChannelHeader,
   ChannelList,
   Chat,
   MessageInput,
@@ -15,12 +14,10 @@ import {
 } from "stream-chat-react"
 import { EmojiPicker } from "stream-chat-react/emojis"
 import "stream-chat-react/dist/css/index.css"
-import { Button, Menu, MenuItem } from "@material-ui/core"
 import DeleteIcon from "@material-ui/icons/Delete"
-import { Link } from "react-router-dom"
-import { SearchField } from "../components/SearchField"
 import clsx from "clsx"
 import { useRef } from "react"
+import { CustomListContainer } from "../components/chat-page-components/CustomListContainer"
 
 export function ChatPage() {
   const { user } = useAuthContext()
@@ -63,25 +60,6 @@ export function ChatPage() {
         <p>Loading...</p>
       )}
     </>
-  )
-}
-
-function CustomListContainer({ children }) {
-  return (
-    <div className="w-72 flex flex-col gap-4 m-3 h-full relative">
-      <SearchField placeholder="Email..." />
-      {children}
-      <Link to=".." relative="path" className="absolute bottom-2 w-full">
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          className="w-full mb-4"
-        >
-          Back
-        </Button>
-      </Link>
-    </div>
   )
 }
 

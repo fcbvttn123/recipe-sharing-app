@@ -35,16 +35,14 @@
 
     + Some pages don't have cards being centered
 
-    + When user clicks a user to start chat, the chat page does not open the chat box of that person right away
+    + After clicking email to create a channel, the input box is not empty 
+
     
-    + Add user search to Channel List component
 
 
 
 
 + Next 
-
-    + Add remove channel feature
 
     + Give permission to delete channel to both members
 
