@@ -64,9 +64,15 @@ export function SearchField({ placeholder, data, handleClick }) {
       setFilteredData(filteredArray)
     }
   }
+  function handleFormSubmit(e) {
+    e.preventDefault()
+    handleClick(searchFieldText, filteredData)
+    setFilteredData([])
+    setSearchFieldText("")
+  }
   return (
     <div className="relative">
-      <div className={classes.search}>
+      <form className={classes.search} onSubmit={handleFormSubmit}>
         <div className={classes.searchIcon}>
           <SearchIcon />
         </div>
@@ -81,7 +87,7 @@ export function SearchField({ placeholder, data, handleClick }) {
           name="searchFieldText"
           onChange={handleChange}
         />
-      </div>
+      </form>
       {filteredData.length > 0 && (
         <List
           component="nav"

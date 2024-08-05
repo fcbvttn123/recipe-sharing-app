@@ -38,7 +38,7 @@
 
 + Problems
 
-    + When removing one channel, the page gets blanked
+    + When removing one channel, the page gets blanked (only in mobile screen because the menu bar disappears)
 
     + Data is not updated after Logout
 
