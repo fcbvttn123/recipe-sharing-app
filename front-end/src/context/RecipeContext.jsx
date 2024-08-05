@@ -31,6 +31,7 @@ export function recipeReducer(state, action) {
       }
     case RECIPE_ACTIONS.GET_FILTERED_RECIPES:
       return {
+        ...state,
         filteredRecipes: action.payload,
       }
     default:

@@ -2,19 +2,30 @@ import { Link } from "react-router-dom"
 import { RecipeCard } from "../components/RecipeCard"
 import { useRecipeContext } from "../hooks/useRecipeContext"
 import { Button } from "@material-ui/core"
+import { RECIPE_ACTIONS } from "../main"
 
 export function Home() {
-  const { recipes, filteredRecipes } = useRecipeContext()
+  const { recipes, filteredRecipes, dispatch } = useRecipeContext()
   return (
     <>
       {/* Only show this button if FILTER IS ON */}
       {filteredRecipes && (
-        <Button variant="contained" color="primary" type="submit">
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          onClick={(e) =>
+            dispatch({
+              type: RECIPE_ACTIONS.GET_FILTERED_RECIPES,
+              payload: null,
+            })
+          }
+        >
           Reset
         </Button>
       )}
       <div className="flex flex-wrap justify-center items-center gap-8">
-        {/* Render all recipes with FILTER IS OFF */}
+        {/* Render all recipes when FILTER IS OFF */}
         {recipes &&
           !filteredRecipes &&
           recipes.map((e) => (
