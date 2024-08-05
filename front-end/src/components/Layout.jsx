@@ -182,12 +182,18 @@ export function Layout(props) {
           <SearchField
             placeholder="Recipe name..."
             data={allRecipeTitles.length > 0 && allRecipeTitles}
-            handleClick={(e, filteredData) =>
+            handleClick={(clickEvent, filteredData) => {
+              let newArr = []
+              recipes.forEach((e) => {
+                if (filteredData.includes(e.title)) {
+                  newArr.push(e)
+                }
+              })
               recipeDispatch({
                 type: RECIPE_ACTIONS.GET_FILTERED_RECIPES,
-                payload: filteredData,
+                payload: newArr,
               })
-            }
+            }}
           />
         </Toolbar>
       </AppBar>
