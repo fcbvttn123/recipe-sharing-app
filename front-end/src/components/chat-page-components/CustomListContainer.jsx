@@ -8,8 +8,7 @@ import { useEffect, useState } from "react"
 export function CustomListContainer({ children }) {
   const { user } = useAuthContext()
   const [allEmails, setAllEmails] = useState(null)
-  function handleSearchClick(e) {
-    const email = e.target.textContent
+  function handleSearchClick(email) {
     async function createChannel(email, token) {
       let res = await fetch("/api/chat/createMessagingChannel", {
         method: "POST",
@@ -41,7 +40,7 @@ export function CustomListContainer({ children }) {
       <SearchField
         placeholder="Email..."
         data={allEmails}
-        handleClick={handleSearchClick}
+        handleClick={(email) => handleSearchClick(email)}
       />
       {children}
       <Link to=".." relative="path" className="absolute bottom-2 w-full">

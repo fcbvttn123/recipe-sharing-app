@@ -38,9 +38,7 @@
 
 + Problems
 
-    + Search 
-
-        + After clicking one item from the search, user cannot reset to all recipes 
+    + When removing one channel, the page gets blanked
 
     + Data is not updated after Logout
 
