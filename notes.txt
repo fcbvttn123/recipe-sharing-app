@@ -36,7 +36,13 @@
 
 
 
-+ Problems 
++ Problems
+
+    + Search 
+
+        + After clicking one item from the search, the search is not reset to empty  
+
+        + After clicking one item from the search, user cannot reset to all recipes 
 
     + Data is not updated after Logout
 
@@ -51,7 +57,9 @@
 
 + Next 
 
-    + Add search bar to search for recipes 
+    + Search 
+
+        + Handle case when no suggestions rendered  
 
     + Give permission to delete channel to both members
 

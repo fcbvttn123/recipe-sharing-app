@@ -49,8 +49,10 @@ const useStyles = makeStyles((theme) => ({
 export function SearchField({ placeholder, data, handleClick }) {
   const classes = useStyles()
   const [filteredData, setFilteredData] = useState([])
+  const [searchFieldText, setSearchFieldText] = useState("")
   function handleChange(e) {
     let inputValue = e.target.value
+    setSearchFieldText(inputValue)
     if (inputValue == "") {
       setFilteredData([])
       return
@@ -75,6 +77,8 @@ export function SearchField({ placeholder, data, handleClick }) {
             input: classes.inputInput,
           }}
           inputProps={{ "aria-label": "search" }}
+          value={searchFieldText}
+          name="searchFieldText"
           onChange={handleChange}
         />
       </div>
@@ -92,6 +96,7 @@ export function SearchField({ placeholder, data, handleClick }) {
                 onClick={(event) => {
                   handleClick(e, filteredData)
                   setFilteredData([])
+                  setSearchFieldText("")
                 }}
               >
                 <ListItemText primary={e} />
