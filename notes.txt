@@ -40,8 +40,6 @@
 
     + Search 
 
-        + After clicking one item from the search, the search is not reset to empty  
-
         + After clicking one item from the search, user cannot reset to all recipes 
 
     + Data is not updated after Logout
