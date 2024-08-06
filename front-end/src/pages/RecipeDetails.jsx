@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import { useRecipeContext } from "../hooks/useRecipeContext"
 import { RecipeCard } from "../components/RecipeCard"
+import { DisqusComments } from "../components/DisqusComments"
 
 export function RecipeDetails() {
   const { recipes } = useRecipeContext()
@@ -26,6 +27,7 @@ export function RecipeDetails() {
       ) : (
         <p>This recipe is not available anymore !</p>
       )}
+      {recipe && <DisqusComments post={recipe} />}
     </div>
   )
 }
