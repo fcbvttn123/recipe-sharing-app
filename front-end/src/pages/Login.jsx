@@ -1,4 +1,18 @@
-import { Button, TextField, Typography } from "@material-ui/core"
+import {
+  Button,
+  FilledInput,
+  FormControl,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
+  makeStyles,
+  TextField,
+  Typography,
+} from "@material-ui/core"
+import MailOutlineIcon from "@material-ui/icons/MailOutline"
+import Visibility from "@material-ui/icons/Visibility"
+import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { handleFormChange } from "../hooks/handleFormChange"
@@ -6,6 +20,23 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import { AUTH_ACTIONS } from "../main"
 import { signInWithPopup } from "firebase/auth"
 import { auth, provider } from "../config/firebase"
+import clsx from "clsx"
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  margin: {
+    margin: theme.spacing(1),
+  },
+  withoutLabel: {
+    marginTop: theme.spacing(3),
+  },
+  textField: {
+    width: "25ch",
+  },
+}))
 
 export function Login() {
   const [formData, setFormData] = useState({
@@ -16,6 +47,8 @@ export function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const { user, dispatch } = useAuthContext()
   const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false)
+  const classes = useStyles()
   function handleFormSubmit(e) {
     e.preventDefault()
     async function startLogin(email, password) {
@@ -137,23 +170,51 @@ export function Login() {
         onSubmit={handleFormSubmit}
         className="flex flex-col items-center gap-y-5 mb-3"
       >
-        <TextField
-          id="filled-basic email"
-          label="Email"
-          variant="filled"
-          name="email"
-          value={formData.email}
-          onChange={(e) => handleFormChange(e, setFormData)}
-        />
-        <TextField
-          id="filled-basic password"
-          label="Password"
-          variant="filled"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={(e) => handleFormChange(e, setFormData)}
-        />
+        {/* Email Textbox */}
+        <FormControl className={clsx(classes.textField)} variant="filled">
+          <InputLabel htmlFor="filled-adornment-email">Email</InputLabel>
+          <FilledInput
+            id="filled-adornment-email"
+            label="Email"
+            variant="filled"
+            name="email"
+            value={formData.email}
+            onChange={(e) => handleFormChange(e, setFormData)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton aria-label="toggle password visibility" edge="end">
+                  <MailOutlineIcon />
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+        {/* Password Textbox */}
+        <FormControl className={clsx(classes.textField)} variant="filled">
+          <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
+          <FilledInput
+            id="filled-adornment-password"
+            label="Password"
+            variant="filled"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={(e) => handleFormChange(e, setFormData)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={(e) => setShowPassword((prev) => !prev)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  edge="end"
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+        {/* Login Button */}
         <Button
           variant="contained"
           color="primary"
@@ -166,7 +227,7 @@ export function Login() {
       {/* Google Login Button */}
       <Button
         variant="contained"
-        className="w-52"
+        className="w-[215.625px]"
         onClick={handleGoogleLogin}
         startIcon={
           <img className="w-5 h-5" src="/images/google.png" alt="" srcset="" />
