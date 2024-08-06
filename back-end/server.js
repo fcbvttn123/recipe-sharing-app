@@ -4,12 +4,14 @@ require("dotenv").config()
 const recipeRoutes = require("./routes/recipe")
 const userRoutes = require("./routes/user")
 const chatRouters = require("./routes/chat")
+const path = require("path")
 
 // Initialize Express App
 const app = express()
 
 // Middleware
 app.use(express.json())
+app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 // Routes
 app.use("/api/auth", userRoutes)

@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const multer = require("multer")
-const multerConfig = require("../utils/multerConfig")
+const path = require("path")
 const {
   getRecipes,
   getYourRecipes,
@@ -14,10 +14,16 @@ const {
 } = require("../controllers/recipeControllers")
 const authRequired = require("../middleware/authRequired")
 
-// Middleware
-const upload = multer({
-  storage: multerConfig("../../front-end/public/images"),
+// Middleware: Configure multer storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "../uploads/"))
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`)
+  },
 })
+const upload = multer({ storage: storage })
 
 // Recipe Routes
 router.get("/", getRecipes)
