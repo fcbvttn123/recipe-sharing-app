@@ -31,6 +31,12 @@
 
         const { firstName: name, lastName } = person
 
+    + Convert to absolute path in backend 
+
+        const path = require("path")
+
+        path.join(__dirname, "../uploads/")
+
 
 
 
