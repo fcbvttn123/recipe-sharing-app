@@ -4,6 +4,9 @@ import App from "./App.jsx"
 import "./index.css"
 import { RecipeContextProvider } from "./context/RecipeContext.jsx"
 import { AuthContextProvider } from "./context/AuthContext.jsx"
+import { disableReactDevTools } from "@fvilers/disable-react-devtools"
+
+if (process.env.NODE_ENV === "production") disableReactDevTools()
 
 export const RECIPE_ACTIONS = {
   GET_RECIPES: "GET_RECIPES",
