@@ -1,13 +1,7 @@
-import {
-  alpha,
-  InputBase,
-  List,
-  ListItem,
-  ListItemText,
-  makeStyles,
-} from "@material-ui/core"
-import SearchIcon from "@material-ui/icons/Search"
+import { alpha, InputBase, List, ListItem, ListItemText } from "@mui/material"
+import SearchIcon from "@mui/icons-material/Search"
 import { useState } from "react"
+import { makeStyles } from "@mui/styles"
 
 const useStyles = makeStyles((theme) => ({
   search: {

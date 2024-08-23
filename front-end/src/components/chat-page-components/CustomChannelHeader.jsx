@@ -1,5 +1,5 @@
 import { useChannelStateContext, useChatContext } from "stream-chat-react"
-import MenuIcon from "@material-ui/icons/Menu"
+import MenuIcon from "@mui/icons-material/Menu"
 
 export function CustomChannelHeader({ currentUserId }) {
   const { channel } = useChannelStateContext()

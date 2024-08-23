@@ -1,14 +1,10 @@
-import { Button, Snackbar, TextField } from "@material-ui/core"
-import MuiAlert from "@material-ui/lab/Alert"
+import { Button, Snackbar, TextField } from "@mui/material"
+import Alert from "@mui/material/Alert"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { useState } from "react"
 import { handleFormChange } from "../hooks/handleFormChange"
 import { useRecipeContext } from "../hooks/useRecipeContext"
 import { RECIPE_ACTIONS } from "../main"
-
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />
-}
 
 export function PostRecipe() {
   // States

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { RecipeCard } from "../components/RecipeCard"
-import { CircularProgress } from "@material-ui/core"
+import CircularProgress from "@mui/material/CircularProgress"
 import { useRecipeContext } from "../hooks/useRecipeContext"
 
 export function YourRecipes() {

@@ -1,10 +1,10 @@
-import { Button, Snackbar, TextField, Typography } from "@material-ui/core"
+import { Button, Snackbar, TextField, Typography } from "@mui/material"
+import Alert from "@mui/material/Alert"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { handleFormChange } from "../hooks/handleFormChange"
 import { useAuthContext } from "../hooks/useAuthContext"
 import { AUTH_ACTIONS } from "../main"
-import Alert from "@material-ui/lab/Alert"
 
 export function Signup() {
   const { user, dispatch } = useAuthContext()

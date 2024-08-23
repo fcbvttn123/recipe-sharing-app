@@ -5,6 +5,9 @@ import "./index.css"
 import { RecipeContextProvider } from "./context/RecipeContext.jsx"
 import { AuthContextProvider } from "./context/AuthContext.jsx"
 import { disableReactDevTools } from "@fvilers/disable-react-devtools"
+import { ThemeProvider, createTheme } from "@mui/material/styles"
+
+const theme = createTheme()
 
 if (process.env.NODE_ENV === "production") disableReactDevTools()
 
@@ -25,10 +28,12 @@ export const AUTH_ACTIONS = {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <RecipeContextProvider>
-        <App />
-      </RecipeContextProvider>
-    </AuthContextProvider>
+    <ThemeProvider theme={theme}>
+      <AuthContextProvider>
+        <RecipeContextProvider>
+          <App />
+        </RecipeContextProvider>
+      </AuthContextProvider>
+    </ThemeProvider>
   </React.StrictMode>
 )

@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { useAuthContext } from "../../hooks/useAuthContext"
 import clsx from "clsx"
 import { Avatar } from "stream-chat-react"
-import DeleteIcon from "@material-ui/icons/Delete"
+import DeleteIcon from "@mui/icons-material/Delete"
 
 export function CustomChannelListItem({
   active,

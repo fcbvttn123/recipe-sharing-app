@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { RecipeCard } from "../components/RecipeCard"
 import { useRecipeContext } from "../hooks/useRecipeContext"
-import { Button } from "@material-ui/core"
+import { Button } from "@mui/material"
 import { RECIPE_ACTIONS } from "../main"
 
 export function Home() {

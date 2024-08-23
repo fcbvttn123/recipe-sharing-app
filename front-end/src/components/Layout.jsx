@@ -1,10 +1,10 @@
 // React
 import { Link, Outlet } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 // MUI
-import CssBaseline from "@material-ui/core/CssBaseline"
 import {
+  CssBaseline,
   AppBar,
   Button,
   Divider,
@@ -17,19 +17,20 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  makeStyles,
   useTheme,
-} from "@material-ui/core"
-import MenuIcon from "@material-ui/icons/Menu"
-import HomeIcon from "@material-ui/icons/Home"
-import CreateIcon from "@material-ui/icons/Create"
+} from "@mui/material"
+import MenuIcon from "@mui/icons-material/Menu"
+import HomeIcon from "@mui/icons-material/Home"
+import CreateIcon from "@mui/icons-material/Create"
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd"
+import ExitToAppIcon from "@mui/icons-material/ExitToApp"
+import ChatIcon from "@mui/icons-material/Chat"
+
 import { useAuthContext } from "../hooks/useAuthContext"
-import AssignmentIndIcon from "@material-ui/icons/AssignmentInd"
-import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { AUTH_ACTIONS, RECIPE_ACTIONS } from "../main"
-import ChatIcon from "@material-ui/icons/Chat"
 import { SearchField } from "./SearchField"
 import { useRecipeContext } from "../hooks/useRecipeContext"
+import { makeStyles } from "@mui/styles"
 
 const drawerWidth = 240
 const useStyles = makeStyles((theme) => ({

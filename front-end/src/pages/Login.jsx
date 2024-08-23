@@ -3,16 +3,15 @@ import {
   FilledInput,
   FormControl,
   IconButton,
-  Input,
   InputAdornment,
   InputLabel,
-  makeStyles,
-  TextField,
   Typography,
-} from "@material-ui/core"
-import MailOutlineIcon from "@material-ui/icons/MailOutline"
-import Visibility from "@material-ui/icons/Visibility"
-import VisibilityOff from "@material-ui/icons/VisibilityOff"
+} from "@mui/material"
+import MailOutlineIcon from "@mui/icons-material/MailOutline"
+import VisibilityIcon from "@mui/icons-material/Visibility"
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
+import { makeStyles } from "@mui/styles"
+
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { handleFormChange } from "../hooks/handleFormChange"

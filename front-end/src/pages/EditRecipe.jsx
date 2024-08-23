@@ -1,4 +1,4 @@
-import { Button, TextField } from "@material-ui/core"
+import { Button, TextField } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { useRecipeContext } from "../hooks/useRecipeContext"

@@ -1,5 +1,5 @@
 import { SearchField } from "../SearchField"
-import { Button } from "@material-ui/core"
+import { Button } from "@mui/material"
 import { Link } from "react-router-dom"
 import "stream-chat-react/dist/css/index.css"
 import { useAuthContext } from "../../hooks/useAuthContext"
