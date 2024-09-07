@@ -4,8 +4,8 @@ import App from "./App.jsx"
 import "./index.css"
 import { RecipeContextProvider } from "./context/RecipeContext.jsx"
 import { AuthContextProvider } from "./context/AuthContext.jsx"
-import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 import { ThemeProvider, createTheme } from "@mui/material/styles"
+import { disableReactDevTools } from "@fvilers/disable-react-devtools"
 
 const theme = createTheme()
 
