@@ -8,8 +8,6 @@ import {
   AppBar,
   Button,
   Divider,
-  Drawer,
-  Hidden,
   IconButton,
   List,
   ListItem,
@@ -17,7 +15,6 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  useTheme,
 } from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import HomeIcon from "@mui/icons-material/Home"
@@ -25,57 +22,15 @@ import CreateIcon from "@mui/icons-material/Create"
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd"
 import ExitToAppIcon from "@mui/icons-material/ExitToApp"
 import ChatIcon from "@mui/icons-material/Chat"
+import { useMediaQuery, Drawer } from "@mui/material"
+import { useTheme } from "@mui/system"
 
 import { useAuthContext } from "../hooks/useAuthContext"
 import { AUTH_ACTIONS, RECIPE_ACTIONS } from "../main"
 import { SearchField } from "./SearchField"
 import { useRecipeContext } from "../hooks/useRecipeContext"
-import { makeStyles } from "@mui/styles"
 
 const drawerWidth = 240
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  drawer: {
-    [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  appBar: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
-    },
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  outlet: {
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: 20,
-      marginRight: 20,
-      marginTop: 80,
-      marginBottom: 20,
-    },
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: 260,
-      marginTop: 85,
-      marginBottom: 25,
-    },
-  },
-}))
 
 export function Layout(props) {
   // States
@@ -90,7 +45,6 @@ export function Layout(props) {
   const { recipes, dispatch: recipeDispatch } = useRecipeContext()
   // MUI
   const { window } = props
-  const classes = useStyles()
   const theme = useTheme()
   const container =
     window !== undefined ? () => window().document.body : undefined
@@ -152,6 +106,7 @@ export function Layout(props) {
       )}
     </div>
   )
+  const isMobile = useMediaQuery(theme.breakpoints.up("sm"))
   // Functions
   function handleDrawerToggle() {
     setMobileOpen(!mobileOpen)
@@ -166,14 +121,23 @@ export function Layout(props) {
     <div>
       <CssBaseline />
       {/* App Bar */}
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar
+        position="fixed"
+        sx={{
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          marginLeft: { sm: drawerWidth },
+        }}
+      >
         <Toolbar className="flex items-center justify-start sm:justify-between">
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            className={classes.menuButton}
+            sx={{
+              marginRight: 2,
+              display: { sm: "none" },
+            }}
           >
             <MenuIcon />
           </IconButton>
@@ -197,16 +161,25 @@ export function Layout(props) {
         </Toolbar>
       </AppBar>
       {/* Nav */}
-      <nav className={classes.drawer} aria-label="mailbox folders">
-        <Hidden smUp implementation="css">
+      <nav
+        sx={{
+          width: { sm: drawerWidth },
+          flexShrink: { sm: 0 },
+        }}
+        aria-label="mailbox folders"
+      >
+        {/* Drawer for small screens (smDown) */}
+        {!isMobile && (
           <Drawer
             container={container}
             variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
+            sx={{
+              "& .MuiDrawer-paper": {
+                width: drawerWidth, // Drawer width set via sx
+              },
             }}
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
@@ -214,21 +187,25 @@ export function Layout(props) {
           >
             {drawer}
           </Drawer>
-        </Hidden>
-        <Hidden xsDown implementation="css">
+        )}
+
+        {/* Drawer for larger screens (smUp) */}
+        {isMobile && (
           <Drawer
-            classes={{
-              paper: classes.drawerPaper,
+            sx={{
+              "& .MuiDrawer-paper": {
+                width: drawerWidth,
+              },
             }}
             variant="permanent"
             open
           >
             {drawer}
           </Drawer>
-        </Hidden>
+        )}
       </nav>
       {/* Content */}
-      <div className={classes.outlet}>
+      <div className="min-[600px]:ml-[250px] mt-[100px]">
         <Outlet />
       </div>
     </div>

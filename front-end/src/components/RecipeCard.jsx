@@ -2,9 +2,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { Menu } from "@mui/material"
-import { MenuItem } from "@mui/material"
-import { makeStyles } from "@mui/styles"
+import Menu from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
 
 import {
   Card,
@@ -17,7 +16,6 @@ import {
   Typography,
 } from "@mui/material"
 
-import clsx from "clsx"
 import { useState } from "react"
 import { Avatar } from "./Avatar"
 import { formatDistanceToNow } from "date-fns"
@@ -25,26 +23,6 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import { useRecipeContext } from "../hooks/useRecipeContext"
 import { RECIPE_ACTIONS } from "../main"
 import { Link, useNavigate } from "react-router-dom"
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%",
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-}))
 
 export function RecipeCard({
   id,
@@ -59,7 +37,6 @@ export function RecipeCard({
   showVerticalDotsIcon,
   likeNumber,
 }) {
-  const classes = useStyles()
   const [expanded, setExpanded] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const { user } = useAuthContext()
@@ -137,7 +114,7 @@ export function RecipeCard({
   user?.email == email &&
     cardMenuItems.push({ path: `/editRecipe/${id}`, text: "Edit" })
   return (
-    <Card className={classes.root}>
+    <Card sx={{ width: 345 }}>
       {/* Card Header: Avatar, Title, Time, Vertical Dots */}
       <CardHeader
         avatar={<Avatar>{email[0].toUpperCase()}</Avatar>}
@@ -179,7 +156,10 @@ export function RecipeCard({
       />
       {/* Card Image */}
       <CardMedia
-        className={classes.media}
+        sx={{
+          height: 0,
+          paddingTop: "56.25%",
+        }}
         image={import.meta.env.VITE__IMAGE_URL + imgName}
       />
       {/* Card Content */}
@@ -207,9 +187,14 @@ export function RecipeCard({
           </IconButton>
         )}
         <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
+          sx={{
+            transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+            marginLeft: "auto",
+            transition: (theme) =>
+              theme.transitions.create("transform", {
+                duration: theme.transitions.duration.shortest,
+              }),
+          }}
           onClick={(e) => {
             e.stopPropagation()
             e.preventDefault()

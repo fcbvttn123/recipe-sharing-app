@@ -1,47 +1,15 @@
-import { alpha, InputBase, List, ListItem, ListItemText } from "@mui/material"
+import {
+  alpha,
+  Box,
+  InputBase,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import { useState } from "react"
-import { makeStyles } from "@mui/styles"
-
-const useStyles = makeStyles((theme) => ({
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.45),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.55),
-    },
-    marginLeft: 0,
-    width: "100%",
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}))
 
 export function SearchField({ placeholder, data, handleClick }) {
-  const classes = useStyles()
   const [filteredData, setFilteredData] = useState([])
   const [searchFieldText, setSearchFieldText] = useState("")
   function handleChange(e) {
@@ -66,16 +34,47 @@ export function SearchField({ placeholder, data, handleClick }) {
   }
   return (
     <div className="relative">
-      <form className={classes.search} onSubmit={handleFormSubmit}>
-        <div className={classes.searchIcon}>
+      <form
+        sx={{
+          position: "relative",
+          borderRadius: (theme) => theme.shape.borderRadius,
+          backgroundColor: (theme) => alpha(theme.palette.common.white, 0.45),
+          "&:hover": {
+            backgroundColor: (theme) => alpha(theme.palette.common.white, 0.55),
+          },
+          marginLeft: 0,
+          width: "100%",
+        }}
+        onSubmit={handleFormSubmit}
+      >
+        <Box
+          sx={{
+            padding: (theme) => theme.spacing(0, 2),
+            height: "100%",
+            position: "absolute",
+            pointerEvents: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <SearchIcon />
-        </div>
+        </Box>
         <InputBase
           placeholder={placeholder}
-          classes={{
-            root: classes.inputRoot,
-            input: classes.inputInput,
-          }}
+          sx={(theme) => ({
+            color: "inherit",
+            padding: theme.spacing(1, 1, 1, 0),
+            paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+            transition: theme.transitions.create("width"),
+            width: "100%",
+            [theme.breakpoints.up("sm")]: {
+              width: "12ch",
+              "&:focus": {
+                width: "20ch",
+              },
+            },
+          })}
           inputProps={{ "aria-label": "search" }}
           value={searchFieldText}
           name="searchFieldText"

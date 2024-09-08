@@ -8,9 +8,7 @@ import {
   Typography,
 } from "@mui/material"
 import MailOutlineIcon from "@mui/icons-material/MailOutline"
-import VisibilityIcon from "@mui/icons-material/Visibility"
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
-import { makeStyles } from "@mui/styles"
 
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
@@ -19,23 +17,6 @@ import { useAuthContext } from "../hooks/useAuthContext"
 import { AUTH_ACTIONS } from "../main"
 import { signInWithPopup } from "firebase/auth"
 import { auth, provider } from "../config/firebase"
-import clsx from "clsx"
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  withoutLabel: {
-    marginTop: theme.spacing(3),
-  },
-  textField: {
-    width: "25ch",
-  },
-}))
 
 export function Login() {
   const [formData, setFormData] = useState({
@@ -47,7 +28,6 @@ export function Login() {
   const { user, dispatch } = useAuthContext()
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
-  const classes = useStyles()
   function handleFormSubmit(e) {
     e.preventDefault()
     async function startLogin(email, password) {
@@ -170,7 +150,7 @@ export function Login() {
         className="flex flex-col items-center gap-y-5 mb-3"
       >
         {/* Email Textbox */}
-        <FormControl className={clsx(classes.textField)} variant="filled">
+        <FormControl sx={{ width: "25ch" }} variant="filled">
           <InputLabel htmlFor="filled-adornment-email">Email</InputLabel>
           <FilledInput
             id="filled-adornment-email"
@@ -189,7 +169,7 @@ export function Login() {
           />
         </FormControl>
         {/* Password Textbox */}
-        <FormControl className={clsx(classes.textField)} variant="filled">
+        <FormControl sx={{ width: "25ch" }} variant="filled">
           <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
           <FilledInput
             id="filled-adornment-password"
@@ -207,7 +187,7 @@ export function Login() {
                   onMouseDown={(e) => e.preventDefault()}
                   edge="end"
                 >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                  {showPassword ? <Visibility /> : <VisibilityOffIcon />}
                 </IconButton>
               </InputAdornment>
             }
@@ -228,9 +208,7 @@ export function Login() {
         variant="contained"
         className="w-[215.625px]"
         onClick={handleGoogleLogin}
-        startIcon={
-          <img className="w-5 h-5" src="/images/google.png" alt="" srcset="" />
-        }
+        startIcon={<img className="w-5 h-5" src="/images/google.png" />}
       >
         Google Login
       </Button>
