@@ -48,11 +48,14 @@ export function YourRecipes() {
   useEffect(() => {
     async function getYourRecipes(token) {
       try {
-        let res = await fetch("http://localhost:3000/api/recipe/yourRecipes", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        let res = await fetch(
+          `${import.meta.env.VITE__BASE_URL}/api/recipe/yourRecipes`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
         let json = await res.json()
         setTimeout(() => {
           setRecipes(json)

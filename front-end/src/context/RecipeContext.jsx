@@ -46,7 +46,7 @@ export function RecipeContextProvider({ children }) {
   })
   useEffect(() => {
     async function getRecipes() {
-      let res = await fetch("http://localhost:3000/api/recipe")
+      let res = await fetch(`${import.meta.env.VITE__BASE_URL}/api/recipe`)
       let json = await res.json()
       if (res.ok) {
         dispatch({ type: RECIPE_ACTIONS.GET_RECIPES, payload: json })

@@ -48,13 +48,16 @@ export function RecipeCard({
     e.preventDefault()
     async function startDeleteProcess(deletedId) {
       try {
-        let res = await fetch(`http://localhost:3000/api/recipe/${deletedId}`, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
+        let res = await fetch(
+          `${import.meta.env.VITE__BASE_URL}/api/recipe/${deletedId}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        )
         let json = await res.json()
         if (res.ok) {
           dispatch({ type: RECIPE_ACTIONS.DELETE_RECIPE, payload: deletedId })
@@ -72,7 +75,7 @@ export function RecipeCard({
     e.preventDefault()
     if (!liked) {
       const res = await fetch(
-        `http://localhost:3000/api/recipe/likeRecipe/${id}`,
+        `${import.meta.env.VITE__BASE_URL}/api/recipe/likeRecipe/${id}`,
         {
           method: "POST",
           headers: {
@@ -85,7 +88,7 @@ export function RecipeCard({
       dispatch({ type: RECIPE_ACTIONS.PATCH_RECIPE, payload: json })
     } else {
       const res = await fetch(
-        `http://localhost:3000/api/recipe/unlikeRecipe/${id}`,
+        `${import.meta.env.VITE__BASE_URL}/api/recipe/unlikeRecipe/${id}`,
         {
           method: "POST",
           headers: {
@@ -103,7 +106,7 @@ export function RecipeCard({
     const email = e.target.textContent
     async function createChannel(email) {
       let res = await fetch(
-        "http://localhost:3000/api/chat/createMessagingChannel",
+        `${import.meta.env.VITE__BASE_URL}/api/chat/createMessagingChannel`,
         {
           method: "POST",
           body: JSON.stringify({ anotherUserEmail: email }),

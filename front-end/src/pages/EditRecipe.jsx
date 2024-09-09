@@ -27,13 +27,16 @@ export function EditRecipe() {
     formDataObj.append("image", recipeImage)
     async function startEditing(formDataObjParameter) {
       try {
-        let res = await fetch(`http://localhost:3000/api/recipe/${id}`, {
-          method: "PATCH",
-          body: formDataObjParameter,
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
+        let res = await fetch(
+          `${import.meta.env.VITE__BASE_URL}/api/recipe/${id}`,
+          {
+            method: "PATCH",
+            body: formDataObjParameter,
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        )
         let json = await res.json()
         if (!res.ok) {
           console.log(json)

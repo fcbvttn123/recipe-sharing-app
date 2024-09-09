@@ -21,11 +21,14 @@ export function Signup() {
     async function startSignup(objData, emptyFormFunction) {
       setIsLoading(true)
       try {
-        let res = await fetch("http://localhost:3000/api/auth/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(objData),
-        })
+        let res = await fetch(
+          `${import.meta.env.VITE__BASE_URL}/api/auth/signup`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(objData),
+          }
+        )
         let json = await res.json()
         if (!res.ok) {
           setIsLoading(false)

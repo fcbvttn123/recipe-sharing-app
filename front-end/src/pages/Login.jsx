@@ -33,13 +33,16 @@ export function Login() {
     async function startLogin(email, password) {
       setIsLoading(true)
       try {
-        let res = await fetch("http://localhost:3000/api/auth/login", {
-          method: "POST",
-          body: JSON.stringify({ email, password }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        let res = await fetch(
+          `${import.meta.env.VITE__BASE_URL}/api/auth/login`,
+          {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         let json = await res.json()
         if (!res.ok) {
           setError(json.error)
@@ -63,15 +66,18 @@ export function Login() {
   async function handleGoogleLogin() {
     // Define Functions
     async function startSignup(email, password, displayName) {
-      let res = await fetch("http://localhost:3000/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password,
-          displayName,
-        }),
-      })
+      let res = await fetch(
+        `${import.meta.env.VITE__BASE_URL}/api/auth/signup`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            password,
+            displayName,
+          }),
+        }
+      )
       let json = await res.json()
       // save the user to local storage
       localStorage.setItem(
@@ -83,13 +89,16 @@ export function Login() {
     }
     async function startLogin(email, password) {
       try {
-        let res = await fetch("http://localhost:3000/api/auth/login", {
-          method: "POST",
-          body: JSON.stringify({ email, password }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
+        let res = await fetch(
+          `${import.meta.env.VITE__BASE_URL}/api/auth/login`,
+          {
+            method: "POST",
+            body: JSON.stringify({ email, password }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
         let json = await res.json()
         localStorage.setItem(
           "RECIPE-SHARING-APP-USER-TOKEN",
@@ -106,7 +115,7 @@ export function Login() {
     let googleDisplayName = googleLoginRes.user.displayName
     // Send google email to server to check if the email already existed
     let apiCall = await fetch(
-      "http://localhost:3000/api/auth/checkIfGoogleAccountExists",
+      `${import.meta.env.VITE__BASE_URL}/api/auth/checkIfGoogleAccountExists`,
       {
         method: "POST",
         body: JSON.stringify({ email: googleLoginRes.user.email }),
