@@ -13,7 +13,7 @@ const app = express()
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://fcbvttnrecipeapp.netlify.app",
   })
 )
 app.use(express.json())
@@ -29,7 +29,8 @@ mongoose
   .connect(process.env.Mong_URI)
   .then(() => {
     console.log("DB connected")
-    app.listen(process.env.PORT, () =>
+    const port = process.env.PORT || 3000
+    app.listen(port, () =>
       console.log(`Listening for requests on port: ${process.env.PORT}`)
     )
   })
