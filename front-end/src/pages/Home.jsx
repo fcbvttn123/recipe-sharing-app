@@ -29,7 +29,7 @@ export function Home() {
         {recipes &&
           !filteredRecipes &&
           recipes.map((e) => (
-            <Link to={`/recipeDetails/${e._id}`}>
+            <Link key={e._id} to={`/recipeDetails/${e._id}`}>
               <RecipeCard
                 key={e._id}
                 id={e._id}

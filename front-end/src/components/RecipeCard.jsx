@@ -141,8 +141,8 @@ export function RecipeCard({
               onClose={() => setAnchorEl(null)}
             >
               {user?.email == email &&
-                cardMenuItems.map((e) => (
-                  <Link to={e.path}>
+                cardMenuItems.map((e, i) => (
+                  <Link key={i} to={e.path}>
                     <MenuItem onClick={() => setAnchorEl(null)}>
                       {e.text}
                     </MenuItem>

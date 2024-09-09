@@ -18,12 +18,7 @@ export function CustomChannelHeader({ currentUserId }) {
       <button className="str-chat__header-hamburger" onClick={openMobileNav}>
         <MenuIcon />
       </button>
-      <img
-        className="w-10 h-10 rounded-lg"
-        src={channelImage}
-        alt=""
-        srcset=""
-      />
+      <img className="w-10 h-10 rounded-lg" src={channelImage} />
       <div className="">
         <p>{channelTitle}</p>
       </div>
