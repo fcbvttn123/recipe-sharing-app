@@ -40,7 +40,7 @@ export function PostRecipe() {
     async function startPosting(formDataObjParameter) {
       setIsLoading(true)
       try {
-        let res = await fetch("/api/recipe", {
+        let res = await fetch("http://localhost:3000/api/recipe", {
           method: "POST",
           body: formDataObjParameter,
           headers: {

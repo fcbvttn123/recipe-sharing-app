@@ -33,7 +33,7 @@ export function Login() {
     async function startLogin(email, password) {
       setIsLoading(true)
       try {
-        let res = await fetch("/api/auth/login", {
+        let res = await fetch("http://localhost:3000/api/auth/login", {
           method: "POST",
           body: JSON.stringify({ email, password }),
           headers: {
@@ -63,7 +63,7 @@ export function Login() {
   async function handleGoogleLogin() {
     // Define Functions
     async function startSignup(email, password, displayName) {
-      let res = await fetch("/api/auth/signup", {
+      let res = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -83,7 +83,7 @@ export function Login() {
     }
     async function startLogin(email, password) {
       try {
-        let res = await fetch("/api/auth/login", {
+        let res = await fetch("http://localhost:3000/api/auth/login", {
           method: "POST",
           body: JSON.stringify({ email, password }),
           headers: {
@@ -105,13 +105,16 @@ export function Login() {
     let googleLoginRes = await signInWithPopup(auth, provider)
     let googleDisplayName = googleLoginRes.user.displayName
     // Send google email to server to check if the email already existed
-    let apiCall = await fetch("/api/auth/checkIfGoogleAccountExists", {
-      method: "POST",
-      body: JSON.stringify({ email: googleLoginRes.user.email }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    let apiCall = await fetch(
+      "http://localhost:3000/api/auth/checkIfGoogleAccountExists",
+      {
+        method: "POST",
+        body: JSON.stringify({ email: googleLoginRes.user.email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
     let json = await apiCall.json()
     // If the email is not registered, add it to Google_Account table
     if (

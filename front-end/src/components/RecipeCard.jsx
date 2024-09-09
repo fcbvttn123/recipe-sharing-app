@@ -48,7 +48,7 @@ export function RecipeCard({
     e.preventDefault()
     async function startDeleteProcess(deletedId) {
       try {
-        let res = await fetch(`/api/recipe/${deletedId}`, {
+        let res = await fetch(`http://localhost:3000/api/recipe/${deletedId}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -71,23 +71,29 @@ export function RecipeCard({
     e.stopPropagation()
     e.preventDefault()
     if (!liked) {
-      const res = await fetch(`/api/recipe/likeRecipe/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      const res = await fetch(
+        `http://localhost:3000/api/recipe/likeRecipe/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
       const json = await res.json()
       dispatch({ type: RECIPE_ACTIONS.PATCH_RECIPE, payload: json })
     } else {
-      const res = await fetch(`/api/recipe/unlikeRecipe/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      const res = await fetch(
+        `http://localhost:3000/api/recipe/unlikeRecipe/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
       const json = await res.json()
       dispatch({ type: RECIPE_ACTIONS.PATCH_RECIPE, payload: json })
     }
@@ -96,14 +102,17 @@ export function RecipeCard({
   function handleEmailClick(e) {
     const email = e.target.textContent
     async function createChannel(email) {
-      let res = await fetch("/api/chat/createMessagingChannel", {
-        method: "POST",
-        body: JSON.stringify({ anotherUserEmail: email }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      let res = await fetch(
+        "http://localhost:3000/api/chat/createMessagingChannel",
+        {
+          method: "POST",
+          body: JSON.stringify({ anotherUserEmail: email }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
       let json = await res.json()
       navigate("/chat")
     }

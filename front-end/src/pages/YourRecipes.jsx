@@ -48,7 +48,7 @@ export function YourRecipes() {
   useEffect(() => {
     async function getYourRecipes(token) {
       try {
-        let res = await fetch("/api/recipe/yourRecipes", {
+        let res = await fetch("http://localhost:3000/api/recipe/yourRecipes", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

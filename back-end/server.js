@@ -5,11 +5,17 @@ const recipeRoutes = require("./routes/recipe")
 const userRoutes = require("./routes/user")
 const chatRouters = require("./routes/chat")
 const path = require("path")
+const cors = require("cors")
 
 // Initialize Express App
 const app = express()
 
 // Middleware
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+)
 app.use(express.json())
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
@@ -30,13 +36,3 @@ mongoose
   .catch((error) => {
     console.error(error)
   })
-
-/*
-
-  Problems: 
-    + PATCH Request: work for JSON Data but not for Form Data
-    + Learn again JWT and read again the authRequired.js file
-    + Learn using path 
-    + Differences between "return error" and "throw error" in /routes/userModel.js --> userSchema.statics.signup
-
-*/

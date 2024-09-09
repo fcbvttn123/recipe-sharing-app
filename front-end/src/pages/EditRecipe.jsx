@@ -27,7 +27,7 @@ export function EditRecipe() {
     formDataObj.append("image", recipeImage)
     async function startEditing(formDataObjParameter) {
       try {
-        let res = await fetch(`/api/recipe/${id}`, {
+        let res = await fetch(`http://localhost:3000/api/recipe/${id}`, {
           method: "PATCH",
           body: formDataObjParameter,
           headers: {
