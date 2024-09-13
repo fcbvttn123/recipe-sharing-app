@@ -13,8 +13,8 @@ const app = express()
 // Middleware
 app.use(
   cors({
-    // origin: "https://fcbvttnrecipeapp.netlify.app",
-    origin: "http://localhost:5173",
+    origin: "https://fcbvttnrecipeapp.netlify.app",
+    // origin: "http://localhost:5173",
   })
 )
 app.use(express.json())
