@@ -8,7 +8,7 @@ export function RecipeDetails() {
   const { id } = useParams()
   let recipe = recipes ? recipes.find((e) => e._id == id) : null
   return (
-    <div>
+    <div className="flex items-center justify-center pb-6">
       {recipe ? (
         <RecipeCard
           key={recipe._id}
@@ -27,7 +27,7 @@ export function RecipeDetails() {
       ) : (
         <p>This recipe is not available anymore !</p>
       )}
-      {recipe && <DisqusComments post={recipe} />}
+      {/* {recipe && <DisqusComments post={recipe} />} */}
     </div>
   )
 }
