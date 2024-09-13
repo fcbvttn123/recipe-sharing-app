@@ -57,7 +57,7 @@ export function EditRecipe() {
     }
   }, [recipes])
   return (
-    <div>
+    <div className="flex items-center justify-center">
       {formData ? (
         <form
           onSubmit={handleFormSubmit}
