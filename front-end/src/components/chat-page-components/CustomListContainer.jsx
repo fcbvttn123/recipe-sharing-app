@@ -10,14 +10,17 @@ export function CustomListContainer({ children }) {
   const [allEmails, setAllEmails] = useState(null)
   function handleSearchClick(email) {
     async function createChannel(email, token) {
-      let res = await fetch("/api/chat/createMessagingChannel", {
-        method: "POST",
-        body: JSON.stringify({ anotherUserEmail: email }),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      let res = await fetch(
+        `${import.meta.env.VITE__BASE_URL}/api/chat/createMessagingChannel`,
+        {
+          method: "POST",
+          body: JSON.stringify({ anotherUserEmail: email }),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       let json = await res.json()
     }
     createChannel(email, user.token)
