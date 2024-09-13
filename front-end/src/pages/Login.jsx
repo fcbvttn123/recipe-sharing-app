@@ -8,7 +8,8 @@ import {
   Typography,
 } from "@mui/material"
 import MailOutlineIcon from "@mui/icons-material/MailOutline"
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"
+import Visibility from "@mui/icons-material/Visibility"
+import VisibilityOff from "@mui/icons-material/VisibilityOff"
 
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
@@ -199,7 +200,7 @@ export function Login() {
                   onMouseDown={(e) => e.preventDefault()}
                   edge="end"
                 >
-                  {showPassword ? <Visibility /> : <VisibilityOffIcon />}
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             }
