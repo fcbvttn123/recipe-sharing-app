@@ -75,7 +75,7 @@ export function PostRecipe() {
         // If user is logged in, show the form
         <form
           onSubmit={(e) => handleFormSubmit(e, setFormData)}
-          className="flex flex-col items-center gap-y-5 mb-3 max-w-96"
+          className="flex flex-col items-center gap-y-5 mb-3 max-w-96 mx-auto"
         >
           <TextField
             id="outlined-basic title"

@@ -96,11 +96,7 @@ export function EditRecipe() {
             value={formData.instruction}
             onChange={(e) => handleFormChange(e, setFormData)}
           />
-          <img
-            src={`/images/${formData.image}`}
-            alt="Food"
-            srcset={`/images/${formData.image}`}
-          />
+          <img src={import.meta.env.VITE__IMAGE_URL + formData.image} />
           <div className="w-full">
             <p>Add Image: </p>
             <input
