@@ -24,12 +24,15 @@ export function CustomListContainer({ children }) {
   }
   useEffect(() => {
     async function getAllEmails(token) {
-      let res = await fetch("/api/auth/getAllEmails", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      let res = await fetch(
+        `${import.meta.env.VITE__BASE_URL}/api/auth/getAllEmails`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       let json = await res.json()
       setAllEmails(json)
     }
