@@ -41,6 +41,7 @@ export function CustomChannelListItem({
     e.stopPropagation()
     e.preventDefault()
     await channel.delete()
+    window.location.reload()
   }
   return (
     <button
