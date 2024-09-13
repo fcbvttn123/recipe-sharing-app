@@ -221,6 +221,7 @@ export function Login() {
         className="w-[215.625px]"
         onClick={handleGoogleLogin}
         startIcon={<img className="w-5 h-5" src="/images/google.png" />}
+        sx={{ backgroundColor: "rgb(241 245 249)", color: "black" }}
       >
         Google Login
       </Button>
