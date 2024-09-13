@@ -187,7 +187,7 @@ export function RecipeCard({
           aria-label="add to favorites"
           onClick={handleHeartIconClickEvent}
         >
-          <FavoriteIcon color={liked ? "secondary" : ""} />
+          <FavoriteIcon sx={{ color: liked ? "red" : "" }} />
         </IconButton>
         <p>{likeNumber}</p>
         {user?.email == email && showDeleteIcon && (
